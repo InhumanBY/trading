@@ -97,6 +97,7 @@
     <record id="action_polymarket_dashboard" model="ir.actions.act_window">
         <field name="name">Dashboard</field>
         <field name="res_model">polymarket_bot.config</field>
+        <field name="res_id" ref="polymarket_bot_config_default"/>
         <field name="view_mode">form</field>
         <field name="view_id" ref="view_polymarket_dashboard_form"/>
         <field name="target">current</field>
