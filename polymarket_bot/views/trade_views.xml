@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_polymarket_trade_list" model="ir.ui.view">
+        <field name="name">polymarket_bot.trade.list</field>
+        <field name="model">polymarket_bot.trade</field>
+        <field name="arch" type="xml">
+            <list string="Trades" default_group_by="market_id">
+                <field name="trade_time"/>
+                <field name="market_id"/>
+                <field name="side" widget="badge"
+                       decoration-success="side == 'yes'"
+                       decoration-danger="side == 'no'"/>
+                <field name="trade_type"/>
+                <field name="qty"/>
+                <field name="price"/>
+                <field name="cost"/>
+                <field name="status" widget="badge"
+                       decoration-success="status == 'filled'"
+                       decoration-warning="status == 'partial'"
+                       decoration-danger="status == 'cancelled'"
+                       decoration-muted="status == 'pending'"/>
+                <field name="paper" widget="boolean"/>
+                <field name="order_id" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_polymarket_trades" model="ir.actions.act_window">
+        <field name="name">Trades</field>
+        <field name="res_model">polymarket_bot.trade</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

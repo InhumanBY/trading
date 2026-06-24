@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_polymarket_daily_summary_list" model="ir.ui.view">
+        <field name="name">polymarket_bot.daily_summary.list</field>
+        <field name="model">polymarket_bot.daily_summary</field>
+        <field name="arch" type="xml">
+            <list string="Daily Summaries">
+                <field name="date"/>
+                <field name="paper" widget="boolean"/>
+                <field name="total_signals"/>
+                <field name="total_trades"/>
+                <field name="positions_delta_neutral"/>
+                <field name="positions_hedged"/>
+                <field name="positions_unhedged"
+                       decoration-danger="positions_unhedged > 0"/>
+                <field name="gross_pnl"/>
+                <field name="net_pnl" decoration-success="net_pnl > 0"
+                       decoration-danger="net_pnl &lt; 0"/>
+                <field name="avg_pair_cost"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_polymarket_daily_summary_graph" model="ir.ui.view">
+        <field name="name">polymarket_bot.daily_summary.graph</field>
+        <field name="model">polymarket_bot.daily_summary</field>
+        <field name="arch" type="xml">
+            <graph string="PNL Over Time" type="line">
+                <field name="date" type="row"/>
+                <field name="net_pnl" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_polymarket_daily_summary" model="ir.actions.act_window">
+        <field name="name">Daily Summaries</field>
+        <field name="res_model">polymarket_bot.daily_summary</field>
+        <field name="view_mode">list,graph</field>
+    </record>
+</odoo>

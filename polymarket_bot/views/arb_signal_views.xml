@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_polymarket_signal_list" model="ir.ui.view">
+        <field name="name">polymarket_bot.arb_signal.list</field>
+        <field name="model">polymarket_bot.arb_signal</field>
+        <field name="arch" type="xml">
+            <list string="Arbitrage Signals"
+                  decoration-success="acted_on == True"
+                  decoration-muted="acted_on == False">
+                <field name="signal_time"/>
+                <field name="market_id"/>
+                <field name="signal_type" widget="badge"
+                       decoration-info="signal_type in ('entry_yes','entry_no')"
+                       decoration-warning="signal_type in ('hedge_yes','hedge_no')"
+                       decoration-muted="signal_type == 'delta_balance'"/>
+                <field name="yes_ask"/>
+                <field name="no_ask"/>
+                <field name="projected_pair_cost"/>
+                <field name="position_state_before"/>
+                <field name="acted_on" widget="boolean"/>
+                <field name="skip_reason"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_polymarket_signal_graph" model="ir.ui.view">
+        <field name="name">polymarket_bot.arb_signal.graph</field>
+        <field name="model">polymarket_bot.arb_signal</field>
+        <field name="arch" type="xml">
+            <graph string="Signal Distribution" type="bar">
+                <field name="signal_time" interval="hour" type="row"/>
+                <field name="signal_type" type="col"/>
+                <field name="id" operator="count" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_polymarket_signals" model="ir.actions.act_window">
+        <field name="name">Signals</field>
+        <field name="res_model">polymarket_bot.arb_signal</field>
+        <field name="view_mode">list,graph</field>
+    </record>
+</odoo>

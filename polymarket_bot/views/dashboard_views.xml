@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_polymarket_dashboard_form" model="ir.ui.view">
+        <field name="name">polymarket_bot.config.dashboard</field>
+        <field name="model">polymarket_bot.config</field>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <form string="Dashboard">
+                <sheet>
+                    <widget name="web_ribbon" title="PAPER TRADE" bg_color="bg-warning"
+                            invisible="not paper_trading"/>
+
+                    <!-- Section 1: Bot Status Card -->
+                    <div class="o_field_widget o_stat_info mb-3">
+                        <h4>Bot Status</h4>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="bot_status" widget="badge"
+                                   decoration-success="bot_status == 'running'"
+                                   decoration-warning="bot_status == 'paused'"
+                                   decoration-muted="bot_status == 'stopped'"/>
+                            <field name="last_heartbeat"/>
+                            <field name="bot_pid" string="PID"/>
+                        </group>
+                        <group>
+                            <button name="action_start" string="Start" type="object"
+                                    class="oe_highlight"
+                                    invisible="bot_status == 'running'"/>
+                            <button name="action_stop" string="Stop" type="object"
+                                    class="btn-danger"
+                                    invisible="bot_status == 'stopped'"/>
+                            <button name="action_pause" string="Pause" type="object"
+                                    class="btn-warning"
+                                    invisible="bot_status != 'running'"/>
+                        </group>
+                    </group>
+
+                    <separator string="Today"/>
+
+                    <!-- Section 2: Today's Stats -->
+                    <div class="o_field_widget o_stat_info">
+                        <div class="row">
+                            <div class="col-3 text-center">
+                                <field name="today_net_pnl" nolabel="1"
+                                       class="o_stat_value"
+                                       decoration-success="today_net_pnl > 0"
+                                       decoration-danger="today_net_pnl &lt; 0"/>
+                                <div class="o_stat_text">Net PNL</div>
+                            </div>
+                            <div class="col-3 text-center">
+                                <field name="today_positions_delta_neutral" nolabel="1"
+                                       class="o_stat_value"/>
+                                <div class="o_stat_text">Delta Neutral</div>
+                            </div>
+                            <div class="col-3 text-center">
+                                <field name="today_positions_unhedged" nolabel="1"
+                                       class="o_stat_value"
+                                       decoration-danger="today_positions_unhedged > 0"/>
+                                <div class="o_stat_text">Unhedged</div>
+                            </div>
+                            <div class="col-3 text-center">
+                                <field name="today_avg_pair_cost" nolabel="1"
+                                       class="o_stat_value"/>
+                                <div class="o_stat_text">Avg Pair Cost</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <separator string="Open Positions"/>
+
+                    <!-- Section 3: Navigation buttons -->
+                    <div class="oe_button_box" name="button_box">
+                        <button type="action" name="%(action_polymarket_open_positions)d"
+                                class="oe_stat_button" icon="fa-list">
+                            <field name="open_positions_count" widget="statinfo"
+                                   string="Open"/>
+                        </button>
+                        <button type="action" name="%(action_polymarket_signals)d"
+                                class="oe_stat_button" icon="fa-signal">
+                            <span class="o_stat_text">Signals</span>
+                        </button>
+                        <button type="action" name="%(action_polymarket_trades)d"
+                                class="oe_stat_button" icon="fa-exchange">
+                            <span class="o_stat_text">Trades</span>
+                        </button>
+                        <button type="action" name="%(action_polymarket_daily_summary)d"
+                                class="oe_stat_button" icon="fa-calendar">
+                            <span class="o_stat_text">Daily PNL</span>
+                        </button>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_polymarket_dashboard" model="ir.actions.act_window">
+        <field name="name">Dashboard</field>
+        <field name="res_model">polymarket_bot.config</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_polymarket_dashboard_form"/>
+        <field name="target">current</field>
+    </record>
+</odoo>

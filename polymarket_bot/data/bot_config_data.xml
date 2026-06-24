@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="polymarket_bot_config_default" model="polymarket_bot.config">
+        <field name="name">Polymarket Bot Config</field>
+        <field name="bot_status">stopped</field>
+        <field name="paper_trading">True</field>
+        <field name="entry_threshold">0.50</field>
+        <field name="target_pair_cost">0.975</field>
+        <field name="delta_neutral_threshold">10.0</field>
+        <field name="position_size_usd">20.0</field>
+        <field name="stop_entry_minutes">2.0</field>
+        <field name="stop_hedge_minutes">1.0</field>
+        <field name="max_position_per_market_usd">200.0</field>
+        <field name="max_total_exposure_usd">500.0</field>
+        <field name="daily_loss_limit_usd">-30.0</field>
+    </record>
+</odoo>

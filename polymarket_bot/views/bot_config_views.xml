@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_polymarket_config_form" model="ir.ui.view">
+        <field name="name">polymarket_bot.config.form</field>
+        <field name="model">polymarket_bot.config</field>
+        <field name="arch" type="xml">
+            <form string="Polymarket Bot Configuration">
+                <header>
+                    <button name="action_start" string="Start Bot" type="object"
+                            class="oe_highlight"
+                            invisible="bot_status == 'running'"/>
+                    <button name="action_stop" string="Stop Bot" type="object"
+                            class="btn-danger"
+                            invisible="bot_status == 'stopped'"/>
+                    <button name="action_pause" string="Pause Bot" type="object"
+                            class="btn-warning"
+                            invisible="bot_status != 'running'"/>
+                    <field name="bot_status" widget="statusbar"
+                           statusbar_visible="stopped,paused,running"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button type="object" name="action_view_positions"
+                                class="oe_stat_button" icon="fa-list">
+                            <field name="open_positions_count" widget="statinfo"
+                                   string="Open Positions"/>
+                        </button>
+                        <button type="object" name="action_view_signals"
+                                class="oe_stat_button" icon="fa-signal">
+                            <field name="one_side_positions_count" widget="statinfo"
+                                   string="Unhedged"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="PAPER TRADE" bg_color="bg-warning"
+                            invisible="not paper_trading"/>
+                    <group>
+                        <field name="name"/>
+                        <field name="paper_trading" widget="boolean_toggle"/>
+                    </group>
+                    <notebook>
+                        <page string="Strategy" name="strategy">
+                            <group>
+                                <group string="Entry">
+                                    <field name="entry_threshold"/>
+                                    <field name="target_pair_cost"/>
+                                    <field name="delta_neutral_threshold"/>
+                                </group>
+                                <group string="Timing">
+                                    <field name="position_size_usd" string="Position Size (USD)"/>
+                                    <field name="stop_entry_minutes"/>
+                                    <field name="stop_hedge_minutes"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Risk Limits" name="risk">
+                            <group>
+                                <field name="max_position_per_market_usd"/>
+                                <field name="max_total_exposure_usd"/>
+                                <field name="daily_loss_limit_usd"/>
+                            </group>
+                        </page>
+                        <page string="API Keys" name="api_keys">
+                            <group string="Polymarket">
+                                <field name="polymarket_api_key"/>
+                                <field name="polymarket_secret" password="True"/>
+                                <field name="polymarket_passphrase" password="True"/>
+                                <field name="wallet_private_key" password="True"/>
+                            </group>
+                            <group string="Notifications">
+                                <field name="telegram_bot_token" password="True"/>
+                                <field name="telegram_chat_id"/>
+                            </group>
+                            <group string="Bot API">
+                                <field name="api_token" readonly="1"/>
+                                <button name="action_regenerate_token" string="Regenerate Token"
+                                        type="object" class="btn-secondary"/>
+                            </group>
+                        </page>
+                        <page string="Status" name="status">
+                            <group>
+                                <field name="bot_status" widget="badge"
+                                       decoration-success="bot_status == 'running'"
+                                       decoration-warning="bot_status == 'paused'"
+                                       decoration-muted="bot_status == 'stopped'"/>
+                                <field name="last_heartbeat"/>
+                                <field name="bot_pid"/>
+                                <field name="paper_trading"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_polymarket_config" model="ir.actions.act_window">
+        <field name="name">Configuration</field>
+        <field name="res_model">polymarket_bot.config</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_polymarket_config_form"/>
+        <field name="target">current</field>
+    </record>
+</odoo>

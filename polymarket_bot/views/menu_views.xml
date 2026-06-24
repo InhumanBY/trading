@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_polymarket_root"
+              name="Polymarket Bot"
+              sequence="0"
+              web_icon="polymarket_bot,static/description/icon.png"/>
+
+    <menuitem id="menu_polymarket_dashboard"
+              name="Dashboard"
+              parent="menu_polymarket_root"
+              action="action_polymarket_dashboard"
+              sequence="10"/>
+
+    <menuitem id="menu_polymarket_positions"
+              name="Positions"
+              parent="menu_polymarket_root"
+              action="action_polymarket_positions"
+              sequence="20"/>
+
+    <menuitem id="menu_polymarket_signals"
+              name="Signals"
+              parent="menu_polymarket_root"
+              action="action_polymarket_signals"
+              sequence="30"/>
+
+    <menuitem id="menu_polymarket_trades"
+              name="Trades"
+              parent="menu_polymarket_root"
+              action="action_polymarket_trades"
+              sequence="40"/>
+
+    <menuitem id="menu_polymarket_daily_summary"
+              name="Daily Summary"
+              parent="menu_polymarket_root"
+              action="action_polymarket_daily_summary"
+              sequence="50"/>
+
+    <menuitem id="menu_polymarket_config"
+              name="Configuration"
+              parent="menu_polymarket_root"
+              action="action_polymarket_config"
+              sequence="99"/>
+</odoo>

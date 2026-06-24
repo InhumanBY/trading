@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_polymarket_config,polymarket_bot.config,model_polymarket_bot_config,base.group_user,1,1,1,1
+access_polymarket_position,polymarket_bot.position,model_polymarket_bot_position,base.group_user,1,1,1,1
+access_polymarket_arb_signal,polymarket_bot.arb_signal,model_polymarket_bot_arb_signal,base.group_user,1,1,1,1
+access_polymarket_trade,polymarket_bot.trade,model_polymarket_bot_trade,base.group_user,1,1,1,1
+access_polymarket_daily_summary,polymarket_bot.daily_summary,model_polymarket_bot_daily_summary,base.group_user,1,1,1,1

@@ -1,0 +1,22 @@
+{
+    "name": "Polymarket Bot",
+    "version": "19.0.1.0.0",
+    "category": "Finance",
+    "summary": "Polymarket BTC 15-min arbitrage bot — admin panel, signals, positions, dashboard",
+    "author": "",
+    "depends": ["base", "mail", "web"],
+    "data": [
+        "security/ir.model.access.csv",
+        "data/bot_config_data.xml",
+        "views/bot_config_views.xml",
+        "views/position_views.xml",
+        "views/arb_signal_views.xml",
+        "views/trade_views.xml",
+        "views/daily_summary_views.xml",
+        "views/dashboard_views.xml",
+        "views/menu_views.xml",
+    ],
+    "installable": True,
+    "application": True,
+    "license": "LGPL-3",
+}
