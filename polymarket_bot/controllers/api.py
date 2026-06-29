@@ -199,3 +199,19 @@ class PolymarketApi(http.Controller):
             record = Summary.create(vals)
 
         return self._json_response({"id": record.id})
+
+    @http.route("/polymarket/api/positions/open", type="json", auth="none", methods=["POST"], csrf=False)
+    def get_open_positions(self, **kwargs):
+        if not self._check_token():
+            return {"error": "unauthorized"}
+        positions = request.env["polymarket_bot.position"].sudo().search([
+            ("state", "not in", ["closed", "unhedged_expiry"])
+        ])
+        return [{
+            "market_id": p.market_id,
+            "state": p.state,
+            "qty_yes": p.qty_yes,
+            "qty_no": p.qty_no,
+            "cost_yes": p.cost_yes,
+            "cost_no": p.cost_no,
+        } for p in positions]
