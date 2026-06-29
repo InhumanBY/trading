@@ -151,7 +151,15 @@ class PolymarketApi(http.Controller):
         Position = request.env["polymarket_bot.position"].sudo()
 
         if state == "closed":
-            record = Position.create(vals)
+            # Найти существующую незакрытую и закрыть её
+            existing = Position.search(
+                [("market_id", "=", market_id), ("state", "!=", "closed")], limit=1
+            )
+            if existing:
+                existing.write(vals)
+                record = existing
+            else:
+                record = Position.create(vals)
         else:
             existing = Position.search(
                 [("market_id", "=", market_id), ("state", "!=", "closed")], limit=1
@@ -200,18 +208,20 @@ class PolymarketApi(http.Controller):
 
         return self._json_response({"id": record.id})
 
-    @http.route("/polymarket/api/positions/open", type="json", auth="none", methods=["POST"], csrf=False)
+    # Заменить get_open_positions целиком:
+    @http.route("/polymarket/api/positions/open", type="http", auth="public", methods=["POST"], csrf=False)
     def get_open_positions(self, **kwargs):
-        if not self._check_token():
-            return {"error": "unauthorized"}
+        config, _ = self._get_config()  # ← было _check_token()
+        if not config:
+            return self._error("unauthorized", 401)
         positions = request.env["polymarket_bot.position"].sudo().search([
             ("state", "not in", ["closed", "unhedged_expiry"])
         ])
-        return [{
+        return self._json_response([{
             "market_id": p.market_id,
             "state": p.state,
             "qty_yes": p.qty_yes,
             "qty_no": p.qty_no,
             "cost_yes": p.cost_yes,
             "cost_no": p.cost_no,
-        } for p in positions]
+        } for p in positions])
