@@ -37,7 +37,7 @@ class PolymarketApi(http.Controller):
             return self._error("unauthorized", 401)
         return self._json_response(config.get_config_for_bot())
 
-    @http.route("/polymarket/api/heartbeat", ...)
+    @http.route("/polymarket/api/heartbeat", type="http", auth="public", methods=["POST"], csrf=False)
     def heartbeat(self, **kwargs):
         config, _ = self._get_config()
         if not config:
