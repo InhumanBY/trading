@@ -37,19 +37,17 @@ class PolymarketApi(http.Controller):
             return self._error("unauthorized", 401)
         return self._json_response(config.get_config_for_bot())
 
-    @http.route("/polymarket/api/heartbeat", type="http", auth="public", methods=["POST"], csrf=False)
+    @http.route("/polymarket/api/heartbeat", ...)
     def heartbeat(self, **kwargs):
         config, _ = self._get_config()
         if not config:
             return self._error("unauthorized", 401)
-        try:
-            body = json.loads(request.httprequest.get_data(as_text=True))
-        except Exception:
-            return self._error("invalid json")
+        body = json.loads(request.httprequest.get_data(as_text=True))
         config.write({
             "last_heartbeat": datetime.utcnow(),
             "bot_pid": body.get("pid", 0),
-            "bot_status": body.get("status", config.bot_status),
+            # НЕ обновляем bot_status из heartbeat!
+            # "bot_status": body.get("status", config.bot_status),  ← убрать эту строку
         })
         return self._json_response({"ok": True})
 
