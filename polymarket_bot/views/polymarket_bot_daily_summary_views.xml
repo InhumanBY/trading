@@ -4,7 +4,7 @@
         <field name="name">polymarket_bot.daily_summary.list</field>
         <field name="model">polymarket_bot.daily_summary</field>
         <field name="arch" type="xml">
-            <list string="Daily Summaries">
+            <list create="0" string="Daily Summaries">
                 <field name="date"/>
                 <field name="paper" widget="boolean"/>
                 <field name="total_signals"/>

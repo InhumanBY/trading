@@ -4,7 +4,8 @@
         <field name="name">polymarket_bot.arb_signal.list</field>
         <field name="model">polymarket_bot.arb_signal</field>
         <field name="arch" type="xml">
-            <list string="Arbitrage Signals"
+            <list create="0"
+                  string="Arbitrage Signals"
                   decoration-success="acted_on == True"
                   decoration-muted="acted_on == False">
                 <field name="signal_time"/>

@@ -4,7 +4,7 @@
         <field name="name">polymarket_bot.trade.list</field>
         <field name="model">polymarket_bot.trade</field>
         <field name="arch" type="xml">
-            <list string="Trades" default_group_by="market_id">
+            <list create="0" string="Trades" default_group_by="market_id">
                 <field name="trade_time"/>
                 <field name="market_id" readonly="1"/>
                 <field name="side" widget="badge"

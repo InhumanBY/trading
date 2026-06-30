@@ -5,7 +5,7 @@
         <field name="name">polymarket_bot.market.list</field>
         <field name="model">polymarket_bot.market</field>
         <field name="arch" type="xml">
-            <list decoration-muted="state == 'expired'"
+            <list create="0" decoration-muted="state == 'expired'"
                   decoration-success="state == 'active'">
                 <field name="name"/>
                 <field name="state" widget="badge"
@@ -26,7 +26,7 @@
         <field name="name">polymarket_bot.market.form</field>
         <field name="model">polymarket_bot.market</field>
         <field name="arch" type="xml">
-            <form string="Market">
+            <form string="Market" create="0">
                 <header>
                     <field name="state" widget="statusbar" statusbar_visible="active,expired"/>
                 </header>

@@ -5,7 +5,8 @@
         <field name="name">polymarket_bot.position.list</field>
         <field name="model">polymarket_bot.position</field>
         <field name="arch" type="xml">
-            <list decoration-danger="final_pnl &lt; 0"
+            <list create="0"
+                  decoration-danger="final_pnl &lt; 0"
                   decoration-success="final_pnl &gt; 0"
                   decoration-muted="not final_pnl">
                 <field name="market_id"/>
@@ -36,7 +37,7 @@
         <field name="name">polymarket_bot.position.form</field>
         <field name="model">polymarket_bot.position</field>
         <field name="arch" type="xml">
-            <form string="Position">
+            <form string="Position" create="0">
                 <header>
                     <field name="state" widget="statusbar"/>
                 </header>
