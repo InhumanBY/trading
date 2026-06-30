@@ -92,15 +92,7 @@ class PolymarketApi(http.Controller):
                 market.write(vals)
         else:
             vals["condition_id"] = condition_id
-            try:
-                with request.env.cr.savepoint():
-                    market = Market.create(vals)
-            except Exception:
-                market = Market.search([("condition_id", "=", condition_id)], limit=1)
-                if market and vals:
-                    update = {k: v for k, v in vals.items() if k != "condition_id"}
-                    if update:
-                        market.write(update)
+            market = Market.create(vals)
 
         return self._json_response({"id": market.id})
 
