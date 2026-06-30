@@ -1,6 +1,6 @@
 /** @odoo-module **/
 import { registry } from "@web/core/registry";
-import { Component, onWillStart, onMounted, useRef } from "@odoo/owl";
+import {Component, onWillStart, onMounted, useRef, onWillUpdateProps} from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 import { loadJS } from "@web/core/assets";
 
@@ -16,16 +16,24 @@ export class PriceChartWidget extends Component {
             await loadJS("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js");
         });
 
+        onWillUpdateProps(async (nextProps) => {
+            await this._renderChart(nextProps.record.resId);
+        });
+
         onMounted(async () => {
             const resId = this.props.record.resId;
             if (!resId) return;
-            const data = await this.orm.call(
-                "polymarket_bot.market",
-                "get_price_chart_data",
-                [[resId]]
-            );
-            this.renderChart(data);
+            await this._renderChart(resId);
         });
+    }
+
+    async _renderChart(resId){
+        const data = await this.orm.call(
+            "polymarket_bot.market",
+            "get_price_chart_data",
+            [[resId]]
+        );
+        this.renderChart(data);
     }
 
     renderChart(data) {
