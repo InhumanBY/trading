@@ -73,4 +73,4 @@ export class PriceChartWidget extends Component {
     }
 }
 
-registry.category("view_widgets").add("price_chart_widget", PriceChartWidget);
+registry.category("view_widgets").add("price_chart_widget", { component: PriceChartWidget });
