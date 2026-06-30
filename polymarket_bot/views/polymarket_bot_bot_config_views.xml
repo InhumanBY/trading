@@ -45,6 +45,7 @@
                                     <field name="target_pair_cost"/>
                                     <field name="delta_neutral_threshold"/>
                                     <field name="max_entry_velocity"/>
+                                    <field name="max_entry_price_shift"/>
                                     <field name="velocity_min_data_points"/>
                                     <field name="velocity_min_time_span"/>
                                 </group>
