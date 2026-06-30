@@ -5,11 +5,9 @@
         <field name="name">polymarket_bot.position.list</field>
         <field name="model">polymarket_bot.position</field>
         <field name="arch" type="xml">
-            <list decoration-warning="state in ('one_side_yes','one_side_no')"
-                  decoration-danger="state == 'unhedged_expiry'"
-                  decoration-success="state == 'delta_neutral'"
-                  decoration-info="state == 'hedged'"
-                  decoration-muted="state == 'closed'">
+            <list decoration-danger="final_pnl &lt; 0"
+                  decoration-success="final_pnl &gt; 0"
+                  decoration-muted="not final_pnl">
                 <field name="market_id"/>
                 <field name="state" widget="badge"
                        decoration-muted="state in ['empty', 'closed']"
