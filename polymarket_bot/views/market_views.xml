@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_polymarket_market_list" model="ir.ui.view">
+        <field name="name">polymarket_bot.market.list</field>
+        <field name="model">polymarket_bot.market</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="state == 'expired'"
+                  decoration-success="state == 'active'">
+                <field name="name"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"
+                       decoration-muted="state == 'expired'"/>
+                <field name="end_time"/>
+                <field name="position_count" string="Positions"/>
+                <field name="trade_count" string="Trades"/>
+                <field name="signal_count" string="Signals"/>
+                <field name="condition_id" optional="hide"/>
+                <field name="market_slug" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_polymarket_market_form" model="ir.ui.view">
+        <field name="name">polymarket_bot.market.form</field>
+        <field name="model">polymarket_bot.market</field>
+        <field name="arch" type="xml">
+            <form string="Market">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="active,expired"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button type="object" name="action_view_positions"
+                                class="oe_stat_button" icon="fa-balance-scale"
+                                invisible="position_count == 0">
+                            <field name="position_count" widget="statinfo" string="Positions"/>
+                        </button>
+                        <button type="object" name="action_view_trades"
+                                class="oe_stat_button" icon="fa-exchange"
+                                invisible="trade_count == 0">
+                            <field name="trade_count" widget="statinfo" string="Trades"/>
+                        </button>
+                        <button type="object" name="action_view_signals"
+                                class="oe_stat_button" icon="fa-bell"
+                                invisible="signal_count == 0">
+                            <field name="signal_count" widget="statinfo" string="Signals"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group string="Identity">
+                            <field name="condition_id"/>
+                            <field name="market_slug"/>
+                            <field name="url" widget="url"/>
+                            <field name="question"/>
+                        </group>
+                        <group string="Timing">
+                            <field name="end_time"/>
+                            <field name="state"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Price History" name="prices">
+                            <field name="price_ids" nolabel="1">
+                                <list>
+                                    <field name="tick_time"/>
+                                    <field name="yes_ask" string="UP Ask"/>
+                                    <field name="no_ask" string="DOWN Ask"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Positions" name="positions">
+                            <field name="position_ids" nolabel="1">
+                                <list decoration-warning="state in ('one_side_yes','one_side_no')"
+                                      decoration-success="state == 'delta_neutral'"
+                                      decoration-info="state == 'hedged'"
+                                      decoration-danger="state == 'unhedged_expiry'"
+                                      decoration-muted="state == 'closed'">
+                                    <field name="state" widget="badge"
+                                           decoration-warning="state in ('one_side_yes','one_side_no')"
+                                           decoration-info="state == 'hedged'"
+                                           decoration-success="state == 'delta_neutral'"
+                                           decoration-danger="state == 'unhedged_expiry'"
+                                           decoration-muted="state in ('empty','closed')"/>
+                                    <field name="pair_cost"/>
+                                    <field name="locked_profit"/>
+                                    <field name="final_pnl"/>
+                                    <field name="opened_at"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Trades" name="trades">
+                            <field name="trade_ids" nolabel="1">
+                                <list>
+                                    <field name="trade_time"/>
+                                    <field name="side" widget="badge"/>
+                                    <field name="trade_type"/>
+                                    <field name="qty"/>
+                                    <field name="price"/>
+                                    <field name="cost"/>
+                                    <field name="status" widget="badge"
+                                           decoration-success="status == 'filled'"
+                                           decoration-warning="status == 'partial'"
+                                           decoration-danger="status == 'cancelled'"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Signals" name="signals">
+                            <field name="signal_ids" nolabel="1">
+                                <list decoration-success="acted_on == True"
+                                      decoration-muted="acted_on == False">
+                                    <field name="signal_time"/>
+                                    <field name="signal_type" widget="badge"/>
+                                    <field name="projected_pair_cost"/>
+                                    <field name="acted_on" widget="boolean"/>
+                                    <field name="skip_reason"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_polymarket_markets" model="ir.actions.act_window">
+        <field name="name">Markets</field>
+        <field name="res_model">polymarket_bot.market</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>
