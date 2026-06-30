@@ -151,3 +151,16 @@ class Market(models.Model):
             "view_mode": "list,form",
             "domain": [("market_id", "=", self.id)],
         }
+
+    def get_price_chart_data(self):
+        self.ensure_one()
+        ticks = self.env["polymarket_bot.market_price"].search(
+            [("market_id", "=", self.id)],
+            order="tick_time asc",
+            limit=5000,
+        )
+        return {
+            "labels": [t.tick_time.isoformat() for t in ticks],
+            "yes_ask": [t.yes_ask for t in ticks],
+            "no_ask": [t.no_ask for t in ticks],
+        }

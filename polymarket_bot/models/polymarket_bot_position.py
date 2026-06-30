@@ -112,6 +112,16 @@ class Position(models.Model):
         utils.migrate_market_id_to_fk(self.env.cr, self._table)
         return super()._auto_init()
 
+    def action_view_market_price_chart(self):
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window",
+            "name": "Market Price Chart",
+            "res_model": "polymarket_bot.market",
+            "res_id": self.market_id.id,
+            "view_mode": "form",
+        }
+
     @api.depends("qty_yes", "qty_no", "cost_yes", "cost_no", "state")
     def _compute_averages(self):
         for rec in self:

@@ -23,6 +23,13 @@
         "views/polymarket_bot_dashboard_views.xml",
         "views/menu_views.xml",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "polymarket_bot/static/src/js/price_chart_widget.js",
+            "polymarket_bot/static/src/xml/price_chart_widget.xml",
+            "polymarket_bot/static/src/scss/price_chart_widget.scss",
+        ],
+    },
     "installable": True,
     "application": True,
     "license": "LGPL-3",

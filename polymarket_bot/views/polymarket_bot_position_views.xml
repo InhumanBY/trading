@@ -42,6 +42,13 @@
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button type="object" name="action_view_market_price_chart"
+                                class="oe_stat_button" icon="fa-line-chart"
+                                invisible="not market_id">
+                            <span class="o_stat_text">Price Chart</span>
+                        </button>
+                    </div>
                     <group>
                         <group>
                             <field name="market_id"/>
