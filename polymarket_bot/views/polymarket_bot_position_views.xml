@@ -37,7 +37,7 @@
         <field name="name">polymarket_bot.position.form</field>
         <field name="model">polymarket_bot.position</field>
         <field name="arch" type="xml">
-            <form string="Position" create="0">
+            <form string="Position" create="0" edit="0">
                 <header>
                     <field name="state" widget="statusbar"/>
                 </header>

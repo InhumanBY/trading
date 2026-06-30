@@ -26,7 +26,7 @@
         <field name="name">polymarket_bot.market.form</field>
         <field name="model">polymarket_bot.market</field>
         <field name="arch" type="xml">
-            <form string="Market" create="0">
+            <form string="Market" create="0" edit="0">
                 <header>
                     <field name="state" widget="statusbar" statusbar_visible="active,expired"/>
                 </header>
