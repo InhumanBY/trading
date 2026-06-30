@@ -8,15 +8,30 @@ class Trade(models.Model):
     _order = "trade_time desc"
 
     market_id = fields.Many2one(
-        "polymarket_bot.market", string="Market", index=True, ondelete="restrict"
+        "polymarket_bot.market",
+        string="Market",
+        index=True,
+        ondelete="cascade",
     )
-    side = fields.Selection([("yes", "YES"), ("no", "NO")], required=True)
-    qty = fields.Float(digits=(16, 6))
-    price = fields.Float(digits=(10, 6))
-    cost = fields.Float(digits=(10, 6))
+    side = fields.Selection(
+        selection=[
+            ("yes", "YES"),
+            ("no", "NO"),
+        ],
+        required=True,
+    )
+    qty = fields.Float(
+        digits=(16, 6),
+    )
+    price = fields.Float(
+        digits=(10, 6),
+    )
+    cost = fields.Float(
+        digits=(10, 6),
+    )
     order_id = fields.Char()
     trade_type = fields.Selection(
-        [
+        selection=[
             ("entry", "Entry"),
             ("hedge", "Hedge"),
             ("delta_balance", "Delta Balance"),
@@ -24,7 +39,7 @@ class Trade(models.Model):
         required=True,
     )
     status = fields.Selection(
-        [
+        selection=[
             ("pending", "Pending"),
             ("filled", "Filled"),
             ("partial", "Partial"),
@@ -32,9 +47,17 @@ class Trade(models.Model):
         ],
         default="pending",
     )
-    paper = fields.Boolean(default=True)
-    trade_time = fields.Datetime(default=fields.Datetime.now, index=True)
-    position_id = fields.Many2one("polymarket_bot.position", ondelete="set null")
+    paper = fields.Boolean(
+        default=True,
+    )
+    trade_time = fields.Datetime(
+        default=fields.Datetime.now,
+        index=True,
+    )
+    position_id = fields.Many2one(
+        "polymarket_bot.position",
+        ondelete="set null",
+    )
 
     def _auto_init(self):
         utils.migrate_market_id_to_fk(self.env.cr, self._table)

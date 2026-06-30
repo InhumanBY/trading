@@ -7,48 +7,106 @@ class BotConfig(models.Model):
     _description = "Polymarket Bot Configuration"
     _inherit = ["mail.thread"]
 
-    name = fields.Char(default="Polymarket Bot Config", required=True)
+    name = fields.Char(
+        default="Polymarket Bot Config",
+        required=True,
+    )
     bot_status = fields.Selection(
-        [("stopped", "Stopped"), ("running", "Running"), ("paused", "Paused")],
+        selection=[
+            ("stopped", "Stopped"),
+            ("running", "Running"),
+            ("paused", "Paused"),
+        ],
         default="stopped",
         readonly=True,
         tracking=True,
     )
-    paper_trading = fields.Boolean(default=True, tracking=True)
+    paper_trading = fields.Boolean(
+        default=True,
+        tracking=True,
+    )
 
     # Strategy
-    entry_threshold = fields.Float(default=0.50, digits=(10, 4))
-    target_pair_cost = fields.Float(default=0.975, digits=(10, 4))
-    delta_neutral_threshold = fields.Float(default=10.0)
-    position_size_usd = fields.Float(default=20.0)
-    stop_entry_minutes = fields.Float(default=2.0)
-    stop_hedge_minutes = fields.Float(default=1.0)
+    entry_threshold = fields.Float(
+        default=0.50,
+        digits=(10, 4),
+    )
+    target_pair_cost = fields.Float(
+        default=0.975,
+        digits=(10, 4),
+    )
+    delta_neutral_threshold = fields.Float(
+        default=10.0,
+    )
+    position_size_usd = fields.Float(
+        default=20.0,
+    )
+    stop_entry_minutes = fields.Float(
+        default=2.0,
+    )
+    stop_hedge_minutes = fields.Float(
+        default=1.0,
+    )
 
     # Risk limits
-    max_position_per_market_usd = fields.Float(default=200.0)
-    max_total_exposure_usd = fields.Float(default=500.0)
-    daily_loss_limit_usd = fields.Float(default=-30.0)
+    max_position_per_market_usd = fields.Float(
+        default=200.0,
+    )
+    max_total_exposure_usd = fields.Float(
+        default=500.0,
+    )
+    daily_loss_limit_usd = fields.Float(
+        default=-30.0,
+    )
 
     # Connections
     polymarket_api_key = fields.Char()
-    polymarket_secret = fields.Char(password=True)
-    polymarket_passphrase = fields.Char(password=True)
-    wallet_private_key = fields.Char(password=True)
-    telegram_bot_token = fields.Char(password=True)
+    polymarket_secret = fields.Char(
+        password=True,
+    )
+    polymarket_passphrase = fields.Char(
+        password=True,
+    )
+    wallet_private_key = fields.Char(
+        password=True,
+    )
+    telegram_bot_token = fields.Char(
+        password=True,
+    )
     telegram_chat_id = fields.Char()
-    api_token = fields.Char(readonly=True)
+    api_token = fields.Char(
+        readonly=True,
+    )
 
     # Bot state (updated by bot via API)
-    last_heartbeat = fields.Datetime(readonly=True)
-    bot_pid = fields.Integer(readonly=True)
+    last_heartbeat = fields.Datetime(
+        readonly=True,
+    )
+    bot_pid = fields.Integer(
+        readonly=True,
+    )
 
     # Dashboard computed
-    open_positions_count = fields.Integer(compute="_compute_dashboard")
-    one_side_positions_count = fields.Integer(compute="_compute_dashboard")
-    today_net_pnl = fields.Float(compute="_compute_dashboard", digits=(10, 4))
-    today_positions_delta_neutral = fields.Integer(compute="_compute_dashboard")
-    today_positions_unhedged = fields.Integer(compute="_compute_dashboard")
-    today_avg_pair_cost = fields.Float(compute="_compute_dashboard", digits=(10, 4))
+    open_positions_count = fields.Integer(
+        compute="_compute_dashboard",
+    )
+    one_side_positions_count = fields.Integer(
+        compute="_compute_dashboard",
+    )
+    today_net_pnl = fields.Float(
+        compute="_compute_dashboard",
+        digits=(10, 4),
+    )
+    today_positions_delta_neutral = fields.Integer(
+        compute="_compute_dashboard",
+    )
+    today_positions_unhedged = fields.Integer(
+        compute="_compute_dashboard",
+    )
+    today_avg_pair_cost = fields.Float(
+        compute="_compute_dashboard",
+        digits=(10, 4),
+    )
 
     @classmethod
     def ensure_singleton(cls, env):

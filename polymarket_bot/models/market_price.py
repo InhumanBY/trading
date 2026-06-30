@@ -13,6 +13,17 @@ class MarketPrice(models.Model):
         ondelete="cascade",
         string="Market",
     )
-    tick_time = fields.Datetime(required=True, index=True, default=fields.Datetime.now, string="Time")
-    yes_ask = fields.Float(digits=(10, 3), string="UP Ask")
-    no_ask = fields.Float(digits=(10, 3), string="DOWN Ask")
+    tick_time = fields.Datetime(
+        required=True,
+        index=True,
+        default=fields.Datetime.now,
+        string="Time",
+    )
+    yes_ask = fields.Float(
+        digits=(10, 3),
+        string="UP Ask",
+    )
+    no_ask = fields.Float(
+        digits=(10, 3),
+        string="DOWN Ask",
+    )

@@ -30,27 +30,70 @@ class Market(models.Model):
         ("condition_id_uniq", "UNIQUE(condition_id)", "condition_id must be unique"),
     ]
 
-    condition_id = fields.Char(required=True, index=True, string="Condition ID")
-    name = fields.Char(compute="_compute_name", store=True, string="Name")
-    question = fields.Char(string="Question")
-    market_slug = fields.Char(string="Slug")
-    url = fields.Char(compute="_compute_url", store=True, string="URL")
-    end_time = fields.Datetime(string="End Time")
+    condition_id = fields.Char(
+        required=True,
+        index=True,
+        string="Condition ID",
+    )
+    name = fields.Char(
+        compute="_compute_name",
+        store=True,
+        string="Name",
+    )
+    question = fields.Char(
+        string="Question",
+    )
+    market_slug = fields.Char(
+        string="Slug",
+    )
+    url = fields.Char(
+        compute="_compute_url",
+        store=True,
+        string="URL",
+    )
+    end_time = fields.Datetime(
+        string="End Time",
+    )
     state = fields.Selection(
-        [("active", "Active"), ("expired", "Expired")],
+        selection=[
+            ("active", "Active"),
+            ("expired", "Expired"),
+        ],
         default="active",
         required=True,
         string="State",
     )
 
-    position_ids = fields.One2many("polymarket_bot.position", "market_id", string="Positions")
-    trade_ids = fields.One2many("polymarket_bot.trade", "market_id", string="Trades")
-    signal_ids = fields.One2many("polymarket_bot.arb_signal", "market_id", string="Signals")
-    price_ids = fields.One2many("polymarket_bot.market_price", "market_id", string="Price History")
+    position_ids = fields.One2many(
+        "polymarket_bot.position",
+        "market_id",
+        string="Positions",
+    )
+    trade_ids = fields.One2many(
+        "polymarket_bot.trade",
+        "market_id",
+        string="Trades",
+    )
+    signal_ids = fields.One2many(
+        "polymarket_bot.arb_signal",
+        "market_id",
+        string="Signals",
+    )
+    price_ids = fields.One2many(
+        "polymarket_bot.market_price",
+        "market_id",
+        string="Price History",
+    )
 
-    position_count = fields.Integer(compute="_compute_counts")
-    trade_count = fields.Integer(compute="_compute_counts")
-    signal_count = fields.Integer(compute="_compute_counts")
+    position_count = fields.Integer(
+        compute="_compute_counts",
+    )
+    trade_count = fields.Integer(
+        compute="_compute_counts",
+    )
+    signal_count = fields.Integer(
+        compute="_compute_counts",
+    )
 
     @api.depends("market_slug", "question", "condition_id")
     def _compute_name(self):

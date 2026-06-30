@@ -8,10 +8,13 @@ class Position(models.Model):
     _order = "opened_at desc"
 
     market_id = fields.Many2one(
-        "polymarket_bot.market", string="Market", index=True, ondelete="restrict"
+        "polymarket_bot.market",
+        string="Market",
+        index=True,
+        ondelete="cascade",
     )
     state = fields.Selection(
-        [
+        selection=[
             ("empty", "Empty"),
             ("one_side_yes", "Have YES, need NO"),
             ("one_side_no", "Have NO, need YES"),
@@ -24,30 +27,71 @@ class Position(models.Model):
         required=True,
     )
 
-    qty_yes = fields.Float(digits=(16, 6))
-    qty_no = fields.Float(digits=(16, 6))
-    cost_yes = fields.Float(digits=(16, 6))
-    cost_no = fields.Float(digits=(16, 6))
+    qty_yes = fields.Float(
+        digits=(16, 6),
+    )
+    qty_no = fields.Float(
+        digits=(16, 6),
+    )
+    cost_yes = fields.Float(
+        digits=(16, 6),
+    )
+    cost_no = fields.Float(
+        digits=(16, 6),
+    )
 
-    avg_yes = fields.Float(compute="_compute_averages", digits=(10, 6))
-    avg_no = fields.Float(compute="_compute_averages", digits=(10, 6))
-    delta = fields.Float(compute="_compute_averages", digits=(16, 6))
-    pair_cost = fields.Float(compute="_compute_averages", digits=(10, 6))
-    locked_profit = fields.Float(compute="_compute_averages", digits=(10, 6))
-    projected_pnl_yes_wins = fields.Float(compute="_compute_averages", digits=(10, 6))
-    projected_pnl_no_wins = fields.Float(compute="_compute_averages", digits=(10, 6))
+    avg_yes = fields.Float(
+        compute="_compute_averages",
+        digits=(10, 6),
+    )
+    avg_no = fields.Float(
+        compute="_compute_averages",
+        digits=(10, 6),
+    )
+    delta = fields.Float(
+        compute="_compute_averages",
+        digits=(16, 6),
+    )
+    pair_cost = fields.Float(
+        compute="_compute_averages",
+        digits=(10, 6),
+    )
+    locked_profit = fields.Float(
+        compute="_compute_averages",
+        digits=(10, 6),
+    )
+    projected_pnl_yes_wins = fields.Float(
+        compute="_compute_averages",
+        digits=(10, 6),
+    )
+    projected_pnl_no_wins = fields.Float(
+        compute="_compute_averages",
+        digits=(10, 6),
+    )
 
-    paper = fields.Boolean(default=True)
+    paper = fields.Boolean(
+        default=True,
+    )
     market_end_time = fields.Datetime()
-    opened_at = fields.Datetime(default=fields.Datetime.now)
+    opened_at = fields.Datetime(
+        default=fields.Datetime.now,
+    )
     hedged_at = fields.Datetime()
     delta_neutral_at = fields.Datetime()
     closed_at = fields.Datetime()
-    final_pnl = fields.Float(digits=(10, 6))
-    unhedged = fields.Boolean(default=False)
+    final_pnl = fields.Float(
+        digits=(10, 6),
+    )
+    unhedged = fields.Boolean(
+        default=False,
+    )
     state_log = fields.Text()
 
-    trade_ids = fields.One2many("polymarket_bot.trade", "position_id", string="Trades")
+    trade_ids = fields.One2many(
+        "polymarket_bot.trade",
+        "position_id",
+        string="Trades",
+    )
 
     def _auto_init(self):
         utils.migrate_market_id_to_fk(self.env.cr, self._table)
