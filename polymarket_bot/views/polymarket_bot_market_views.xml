@@ -61,6 +61,9 @@
                         </group>
                     </group>
                     <notebook>
+                        <page string="Price Chart" name="price_chart">
+                            <field name="price_chart_data" widget="dashboard_graph" graph_type="line"/>
+                        </page>
                         <page string="Price History" name="prices">
                             <field name="price_ids" nolabel="1" readonly="1">
                                 <list>

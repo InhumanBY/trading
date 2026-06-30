@@ -1,3 +1,4 @@
+import json
 import pytz
 from datetime import datetime
 
@@ -98,6 +99,10 @@ class Market(models.Model):
     price_count = fields.Integer(
         compute="_compute_counts",
     )
+    price_chart_data = fields.Text(
+        string="Price Chart Data",
+        compute="_compute_price_chart_data",
+    )
 
     @api.depends("market_slug", "question", "condition_id")
     def _compute_name(self):
@@ -151,3 +156,22 @@ class Market(models.Model):
             "view_mode": "list,form",
             "domain": [("market_id", "=", self.id)],
         }
+
+    def _compute_price_chart_data(self):
+        for rec in self:
+            ticks = self.env["polymarket_bot.market_price"].search(
+                [("market_id", "=", rec.id)],
+                order="tick_time asc",
+                limit=5000,
+            )
+            up_values = []
+            down_values = []
+            for t in ticks:
+                label = t.tick_time.strftime("%H:%M:%S")
+                up_values.append({"x": label, "y": t.yes_ask})
+                down_values.append({"x": label, "y": t.no_ask})
+            data = [
+                {"key": "Up ask", "values": up_values, "color": "#378ADD"},
+                {"key": "Down ask", "values": down_values, "color": "#D85A30"},
+            ]
+            rec.price_chart_data = json.dumps(data)

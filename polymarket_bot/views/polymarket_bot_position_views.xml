@@ -86,6 +86,9 @@
                         <field name="state_log" nolabel="1" widget="text"/>
                     </group>
                     <notebook>
+                        <page string="Price Chart" name="price_chart">
+                            <field name="price_chart_data" widget="dashboard_graph" graph_type="line"/>
+                        </page>
                         <page string="Trades">
                             <field name="trade_ids">
                                 <list>
