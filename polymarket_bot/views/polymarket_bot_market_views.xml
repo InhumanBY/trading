@@ -62,7 +62,7 @@
                     </group>
                     <notebook>
                         <page string="Price Chart" name="price_chart">
-                            <field name="id" widget="price_chart_widget" nolabel="1"/>
+                            <widget name="price_chart_widget"/>
                         </page>
                         <page string="Price History" name="prices">
                             <field name="price_ids" nolabel="1" readonly="1">
