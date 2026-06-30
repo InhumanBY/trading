@@ -24,7 +24,7 @@ def _name_from_slug(slug):
 class Market(models.Model):
     _name = "polymarket_bot.market"
     _description = "Polymarket Market"
-    _order = "end_time desc"
+    _order = "id desc"
     _rec_name = "name"
     _sql_constraints = [
         ("condition_id_uniq", "UNIQUE(condition_id)", "condition_id must be unique"),
