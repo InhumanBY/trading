@@ -34,7 +34,11 @@ class PolymarketApi(http.Controller):
         Market = request.env["polymarket_bot.market"].sudo()
         market = Market.search([("condition_id", "=", condition_id)], limit=1)
         if not market:
-            market = Market.create({"condition_id": condition_id})
+            try:
+                with request.env.cr.savepoint():
+                    market = Market.create({"condition_id": condition_id})
+            except Exception:
+                market = Market.search([("condition_id", "=", condition_id)], limit=1)
         return market
 
     @http.route("/polymarket/api/config", type="http", auth="public", methods=["POST"], csrf=False)
