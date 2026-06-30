@@ -139,7 +139,7 @@ class Market(models.Model):
             "type": "ir.actions.act_window",
             "name": "Trades",
             "res_model": "polymarket_bot.trade",
-            "view_mode": "list,form",
+            "view_mode": "list",
             "domain": [("market_id", "=", self.id)],
         }
 
@@ -148,7 +148,7 @@ class Market(models.Model):
             "type": "ir.actions.act_window",
             "name": "Signals",
             "res_model": "polymarket_bot.arb_signal",
-            "view_mode": "list,form",
+            "view_mode": "list",
             "domain": [("market_id", "=", self.id)],
         }
 

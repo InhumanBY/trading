@@ -28,6 +28,6 @@
     <record id="action_polymarket_trades" model="ir.actions.act_window">
         <field name="name">Trades</field>
         <field name="res_model">polymarket_bot.trade</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">list</field>
     </record>
 </odoo>
