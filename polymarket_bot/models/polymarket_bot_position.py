@@ -95,10 +95,6 @@ class Position(models.Model):
         compute="_compute_result_label",
     )
     state_log = fields.Text()
-    price_chart_data = fields.Text(
-        related="market_id.price_chart_data",
-        string="Price Chart Data",
-    )
 
     trade_ids = fields.One2many(
         "polymarket_bot.trade",
