@@ -14,5 +14,5 @@ class MarketPrice(models.Model):
         string="Market",
     )
     tick_time = fields.Datetime(required=True, index=True, default=fields.Datetime.now, string="Time")
-    yes_ask = fields.Float(digits=(10, 6), string="UP Ask")
-    no_ask = fields.Float(digits=(10, 6), string="DOWN Ask")
+    yes_ask = fields.Float(digits=(10, 3), string="UP Ask")
+    no_ask = fields.Float(digits=(10, 3), string="DOWN Ask")
