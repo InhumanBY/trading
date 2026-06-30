@@ -59,6 +59,19 @@ class BotConfig(models.Model):
         help="Максимальная скорость изменения цены ($/сек) для разрешения входа. "
              "Если цена движется быстрее — вход блокируется (защита от ловли тренда).",
     )
+    velocity_min_data_points = fields.Integer(
+        string="Velocity min data points",
+        default=10,
+        help="Минимальное количество тиков для надёжного расчёта скорости изменения цены. "
+             "Пока данных меньше — вход блокируется (недостаточно информации о тренде).",
+    )
+    velocity_min_time_span = fields.Float(
+        string="Velocity min time span (sec)",
+        default=3.0,
+        digits=(10, 1),
+        help="Минимальный временной охват истории (в секундах) для расчёта скорости. "
+             "Пока охват меньше — вход блокируется.",
+    )
 
     # Risk limits
     max_position_per_market_usd = fields.Float(
@@ -165,6 +178,8 @@ class BotConfig(models.Model):
             "stop_entry_minutes": self.stop_entry_minutes,
             "stop_hedge_minutes": self.stop_hedge_minutes,
             "max_entry_velocity": self.max_entry_velocity,
+            "velocity_min_data_points": self.velocity_min_data_points,
+            "velocity_min_time_span": self.velocity_min_time_span,
             "max_position_per_market_usd": self.max_position_per_market_usd,
             "max_total_exposure_usd": self.max_total_exposure_usd,
             "daily_loss_limit_usd": self.daily_loss_limit_usd,
