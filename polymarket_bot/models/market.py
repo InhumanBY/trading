@@ -26,9 +26,10 @@ class Market(models.Model):
     _description = "Polymarket Market"
     _order = "id desc"
     _rec_name = "name"
-    _sql_constraints = [
-        ("condition_id_uniq", "UNIQUE(condition_id)", "condition_id must be unique"),
-    ]
+    _condition_id_uniq = models.Constraint(
+        "UNIQUE(condition_id)",
+        "condition_id must be unique",
+    )
 
     condition_id = fields.Char(
         required=True,
