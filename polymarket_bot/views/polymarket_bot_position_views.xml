@@ -22,7 +22,7 @@
                 <field name="projected_pnl_yes_wins" string="PNL if YES"/>
                 <field name="projected_pnl_no_wins" string="PNL if NO"/>
                 <field name="unhedged"/>
-                <field name="final_pnl"/>
+                <field name="final_pnl" sum="Total PNL"/>
                 <field name="winning_side" widget="badge"
                        decoration-success="winning_side == 'yes'"
                        decoration-danger="winning_side == 'no'"

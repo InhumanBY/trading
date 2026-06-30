@@ -28,45 +28,45 @@ class Position(models.Model):
     )
 
     qty_yes = fields.Float(
-        digits=(16, 6),
+        digits=(16, 3),
     )
     qty_no = fields.Float(
-        digits=(16, 6),
+        digits=(16, 3),
     )
     cost_yes = fields.Float(
-        digits=(16, 6),
+        digits=(16, 3),
     )
     cost_no = fields.Float(
-        digits=(16, 6),
+        digits=(16, 3),
     )
 
     avg_yes = fields.Float(
         compute="_compute_averages",
-        digits=(10, 6),
+        digits=(10, 3),
     )
     avg_no = fields.Float(
         compute="_compute_averages",
-        digits=(10, 6),
+        digits=(10, 3),
     )
     delta = fields.Float(
         compute="_compute_averages",
-        digits=(16, 6),
+        digits=(16, 3),
     )
     pair_cost = fields.Float(
         compute="_compute_averages",
-        digits=(10, 6),
+        digits=(10, 3),
     )
     locked_profit = fields.Float(
         compute="_compute_averages",
-        digits=(10, 6),
+        digits=(10, 3),
     )
     projected_pnl_yes_wins = fields.Float(
         compute="_compute_averages",
-        digits=(10, 6),
+        digits=(10, 3),
     )
     projected_pnl_no_wins = fields.Float(
         compute="_compute_averages",
-        digits=(10, 6),
+        digits=(10, 3),
     )
 
     paper = fields.Boolean(
@@ -80,7 +80,7 @@ class Position(models.Model):
     delta_neutral_at = fields.Datetime()
     closed_at = fields.Datetime()
     final_pnl = fields.Float(
-        digits=(10, 6),
+        digits=(10, 3),
     )
     unhedged = fields.Boolean(
         default=False,
