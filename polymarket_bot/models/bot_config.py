@@ -41,6 +41,11 @@ class BotConfig(models.Model):
     position_size_usd = fields.Float(
         default=20.0,
     )
+    position_size_shares = fields.Float(
+        default=20.0,
+        string="Position Size (Shares)",
+        help="Количество акций для покупки на каждой стороне (entry и hedge).",
+    )
     stop_entry_minutes = fields.Float(
         default=2.0,
     )
@@ -149,6 +154,7 @@ class BotConfig(models.Model):
             "target_pair_cost": self.target_pair_cost,
             "delta_neutral_threshold": self.delta_neutral_threshold,
             "position_size_usd": self.position_size_usd,
+            "position_size_shares": self.position_size_shares,
             "stop_entry_minutes": self.stop_entry_minutes,
             "stop_hedge_minutes": self.stop_hedge_minutes,
             "max_position_per_market_usd": self.max_position_per_market_usd,
