@@ -6,7 +6,7 @@
         <field name="arch" type="xml">
             <list string="Trades" default_group_by="market_id">
                 <field name="trade_time"/>
-                <field name="market_id"/>
+                <field name="market_id" readonly="1"/>
                 <field name="side" widget="badge"
                        decoration-success="side == 'yes'"
                        decoration-danger="side == 'no'"/>

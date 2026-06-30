@@ -210,6 +210,8 @@ class PolymarketApi(http.Controller):
             "final_pnl": body.get("final_pnl", 0),
             "unhedged": body.get("unhedged", False),
         }
+        if body.get("winning_side") in ("yes", "no", "unknown"):
+            vals["winning_side"] = body["winning_side"]
         if body.get("market_end_time"):
             vals["market_end_time"] = body["market_end_time"]
         if body.get("hedged_at"):

@@ -24,6 +24,10 @@
                 <field name="projected_pnl_no_wins" string="PNL if NO"/>
                 <field name="unhedged"/>
                 <field name="final_pnl"/>
+                <field name="winning_side" widget="badge"
+                       decoration-success="winning_side == 'yes'"
+                       decoration-danger="winning_side == 'no'"
+                       decoration-muted="winning_side == 'unknown'"/>
                 <field name="paper"/>
                 <field name="opened_at"/>
             </list>
@@ -75,6 +79,8 @@
                             <field name="projected_pnl_yes_wins" string="PNL if YES wins"/>
                             <field name="projected_pnl_no_wins" string="PNL if NO wins"/>
                             <field name="final_pnl"/>
+                            <field name="winning_side"/>
+                            <field name="result_label"/>
                         </group>
                     </group>
                     <group string="State Transition Log">

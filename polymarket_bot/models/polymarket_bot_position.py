@@ -85,6 +85,15 @@ class Position(models.Model):
     unhedged = fields.Boolean(
         default=False,
     )
+    winning_side = fields.Selection(
+        [('yes', 'Up (Yes)'), ('no', 'Down (No)'), ('unknown', 'Unknown')],
+        string="Winning Side",
+        default='unknown',
+    )
+    result_label = fields.Char(
+        string="Result",
+        compute="_compute_result_label",
+    )
     state_log = fields.Text()
 
     trade_ids = fields.One2many(
@@ -92,6 +101,12 @@ class Position(models.Model):
         "position_id",
         string="Trades",
     )
+
+    @api.depends("winning_side")
+    def _compute_result_label(self):
+        labels = {"yes": "Up Won", "no": "Down Won", "unknown": "Unknown"}
+        for rec in self:
+            rec.result_label = labels.get(rec.winning_side, "Unknown")
 
     def _auto_init(self):
         utils.migrate_market_id_to_fk(self.env.cr, self._table)

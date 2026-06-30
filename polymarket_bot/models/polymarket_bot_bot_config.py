@@ -52,6 +52,13 @@ class BotConfig(models.Model):
     stop_hedge_minutes = fields.Float(
         default=1.0,
     )
+    max_entry_velocity = fields.Float(
+        string="Max Entry Velocity",
+        default=0.03,
+        digits=(10, 4),
+        help="Максимальная скорость изменения цены ($/сек) для разрешения входа. "
+             "Если цена движется быстрее — вход блокируется (защита от ловли тренда).",
+    )
 
     # Risk limits
     max_position_per_market_usd = fields.Float(
@@ -157,6 +164,7 @@ class BotConfig(models.Model):
             "position_size_shares": self.position_size_shares,
             "stop_entry_minutes": self.stop_entry_minutes,
             "stop_hedge_minutes": self.stop_hedge_minutes,
+            "max_entry_velocity": self.max_entry_velocity,
             "max_position_per_market_usd": self.max_position_per_market_usd,
             "max_total_exposure_usd": self.max_total_exposure_usd,
             "daily_loss_limit_usd": self.daily_loss_limit_usd,
