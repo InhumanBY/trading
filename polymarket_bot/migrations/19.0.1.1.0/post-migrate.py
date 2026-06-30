@@ -29,15 +29,14 @@ def migrate(cr, version):
     cids = [row[0] for row in cr.fetchall()]
 
     for cid in cids:
-        cr.execute(
-            """
-            INSERT INTO polymarket_bot_market
-                (condition_id, name, state, create_uid, write_uid, create_date, write_date)
-            VALUES (%s, %s, 'active', 1, 1, now(), now())
-            ON CONFLICT (condition_id) DO NOTHING
-            """,
-            (cid, cid[:8]),
-        )
+        cr.execute("SELECT id FROM polymarket_bot_market WHERE condition_id = %s", (cid,))
+        if not cr.fetchone():
+            cr.execute(
+                "INSERT INTO polymarket_bot_market"
+                " (condition_id, name, state, create_uid, write_uid, create_date, write_date)"
+                " VALUES (%s, %s, 'active', 1, 1, now(), now())",
+                (cid, cid[:8]),
+            )
 
     for table in tables_with_old:
         cr.execute(f"""
