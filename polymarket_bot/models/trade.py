@@ -6,7 +6,9 @@ class Trade(models.Model):
     _description = "Polymarket Trade"
     _order = "trade_time desc"
 
-    market_id = fields.Char(index=True)
+    market_id = fields.Many2one(
+        "polymarket_bot.market", string="Market", index=True, ondelete="restrict"
+    )
     side = fields.Selection([("yes", "YES"), ("no", "NO")], required=True)
     qty = fields.Float(digits=(16, 6))
     price = fields.Float(digits=(10, 6))

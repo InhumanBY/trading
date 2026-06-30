@@ -6,7 +6,9 @@ class ArbSignal(models.Model):
     _description = "Arbitrage Signal"
     _order = "signal_time desc"
 
-    market_id = fields.Char(index=True)
+    market_id = fields.Many2one(
+        "polymarket_bot.market", string="Market", index=True, ondelete="restrict"
+    )
     signal_type = fields.Selection(
         [
             ("entry_yes", "Entry YES"),

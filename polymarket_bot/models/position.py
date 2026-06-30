@@ -6,7 +6,9 @@ class Position(models.Model):
     _description = "Polymarket Position"
     _order = "opened_at desc"
 
-    market_id = fields.Char(index=True, required=True)
+    market_id = fields.Many2one(
+        "polymarket_bot.market", string="Market", index=True, ondelete="restrict"
+    )
     state = fields.Selection(
         [
             ("empty", "Empty"),

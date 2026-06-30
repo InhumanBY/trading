@@ -30,6 +30,13 @@ class PolymarketApi(http.Controller):
     def _error(self, msg, status=400):
         return self._json_response({"error": msg}, status=status)
 
+    def _get_or_create_market(self, condition_id):
+        Market = request.env["polymarket_bot.market"].sudo()
+        market = Market.search([("condition_id", "=", condition_id)], limit=1)
+        if not market:
+            market = Market.create({"condition_id": condition_id})
+        return market
+
     @http.route("/polymarket/api/config", type="http", auth="public", methods=["POST"], csrf=False)
     def get_config(self, **kwargs):
         config, _ = self._get_config()
@@ -46,10 +53,70 @@ class PolymarketApi(http.Controller):
         config.write({
             "last_heartbeat": datetime.utcnow(),
             "bot_pid": body.get("pid", 0),
-            # НЕ обновляем bot_status из heartbeat!
-            # "bot_status": body.get("status", config.bot_status),  ← убрать эту строку
         })
         return self._json_response({"ok": True})
+
+    @http.route("/polymarket/api/market", type="http", auth="public", methods=["POST"], csrf=False)
+    def upsert_market(self, **kwargs):
+        config, _ = self._get_config()
+        if not config:
+            return self._error("unauthorized", 401)
+        try:
+            body = json.loads(request.httprequest.get_data(as_text=True))
+        except Exception:
+            return self._error("invalid json")
+
+        condition_id = body.get("condition_id", "").strip()
+        if not condition_id:
+            return self._error("condition_id required")
+
+        Market = request.env["polymarket_bot.market"].sudo()
+        market = Market.search([("condition_id", "=", condition_id)], limit=1)
+
+        vals = {}
+        if body.get("question"):
+            vals["question"] = body["question"]
+        if body.get("market_slug"):
+            vals["market_slug"] = body["market_slug"]
+        if body.get("end_time"):
+            vals["end_time"] = body["end_time"]
+        if body.get("state"):
+            vals["state"] = body["state"]
+
+        if market:
+            if vals:
+                market.write(vals)
+        else:
+            vals["condition_id"] = condition_id
+            market = Market.create(vals)
+
+        return self._json_response({"id": market.id})
+
+    @http.route("/polymarket/api/price", type="http", auth="public", methods=["POST"], csrf=False)
+    def create_price(self, **kwargs):
+        config, _ = self._get_config()
+        if not config:
+            return self._error("unauthorized", 401)
+        try:
+            body = json.loads(request.httprequest.get_data(as_text=True))
+        except Exception:
+            return self._error("invalid json")
+
+        condition_id = body.get("market_id", "").strip()
+        if not condition_id:
+            return self._error("market_id required")
+
+        market = self._get_or_create_market(condition_id)
+        try:
+            record = request.env["polymarket_bot.market_price"].sudo().create({
+                "market_id": market.id,
+                "yes_ask": body.get("yes_ask", 0),
+                "no_ask": body.get("no_ask", 0),
+            })
+        except Exception as e:
+            _logger.exception("price create error")
+            return self._error(str(e))
+        return self._json_response({"id": record.id})
 
     @http.route("/polymarket/api/signal", type="http", auth="public", methods=["POST"], csrf=False)
     def create_signal(self, **kwargs):
@@ -60,9 +127,11 @@ class PolymarketApi(http.Controller):
             body = json.loads(request.httprequest.get_data(as_text=True))
         except Exception:
             return self._error("invalid json")
+
+        market = self._get_or_create_market(body.get("market_id", ""))
         try:
             record = request.env["polymarket_bot.arb_signal"].sudo().create({
-                "market_id": body.get("market_id"),
+                "market_id": market.id,
                 "signal_type": body.get("signal_type"),
                 "yes_ask": body.get("yes_ask", 0),
                 "no_ask": body.get("no_ask", 0),
@@ -89,13 +158,13 @@ class PolymarketApi(http.Controller):
         except Exception:
             return self._error("invalid json")
 
-        market_id = body.get("market_id")
+        market = self._get_or_create_market(body.get("market_id", ""))
         position = request.env["polymarket_bot.position"].sudo().search(
-            [("market_id", "=", market_id), ("state", "!=", "closed")], limit=1
+            [("market_id", "=", market.id), ("state", "!=", "closed")], limit=1
         )
         try:
             record = request.env["polymarket_bot.trade"].sudo().create({
-                "market_id": market_id,
+                "market_id": market.id,
                 "side": body.get("side"),
                 "qty": body.get("qty", 0),
                 "price": body.get("price", 0),
@@ -122,11 +191,11 @@ class PolymarketApi(http.Controller):
         except Exception:
             return self._error("invalid json")
 
-        market_id = body.get("market_id")
+        market = self._get_or_create_market(body.get("market_id", ""))
         state = body.get("state", "empty")
 
         vals = {
-            "market_id": market_id,
+            "market_id": market.id,
             "state": state,
             "qty_yes": body.get("qty_yes", 0),
             "qty_no": body.get("qty_no", 0),
@@ -147,26 +216,14 @@ class PolymarketApi(http.Controller):
             vals["closed_at"] = body["closed_at"]
 
         Position = request.env["polymarket_bot.position"].sudo()
-
-        if state == "closed":
-            # Найти существующую незакрытую и закрыть её
-            existing = Position.search(
-                [("market_id", "=", market_id), ("state", "!=", "closed")], limit=1
-            )
-            if existing:
-                existing.write(vals)
-                record = existing
-            else:
-                record = Position.create(vals)
+        existing = Position.search(
+            [("market_id", "=", market.id), ("state", "!=", "closed")], limit=1
+        )
+        if existing:
+            existing.write(vals)
+            record = existing
         else:
-            existing = Position.search(
-                [("market_id", "=", market_id), ("state", "!=", "closed")], limit=1
-            )
-            if existing:
-                existing.write(vals)
-                record = existing
-            else:
-                record = Position.create(vals)
+            record = Position.create(vals)
 
         return self._json_response({"id": record.id})
 
@@ -206,17 +263,16 @@ class PolymarketApi(http.Controller):
 
         return self._json_response({"id": record.id})
 
-    # Заменить get_open_positions целиком:
     @http.route("/polymarket/api/positions/open", type="http", auth="public", methods=["POST"], csrf=False)
     def get_open_positions(self, **kwargs):
-        config, _ = self._get_config()  # ← было _check_token()
+        config, _ = self._get_config()
         if not config:
             return self._error("unauthorized", 401)
         positions = request.env["polymarket_bot.position"].sudo().search([
             ("state", "not in", ["closed", "unhedged_expiry"])
         ])
         return self._json_response([{
-            "market_id": p.market_id,
+            "market_id": p.market_id.condition_id if p.market_id else "",
             "state": p.state,
             "qty_yes": p.qty_yes,
             "qty_no": p.qty_no,
