@@ -231,6 +231,11 @@ class PolymarketApi(http.Controller):
         else:
             record = Position.create(vals)
 
+        if record.closed_at:
+            request.env["polymarket_bot.daily_summary"].sudo().recompute_for_date(
+                record.closed_at.date(), paper=record.paper
+            )
+
         return self._json_response({"id": record.id})
 
     @http.route("/polymarket/api/daily_summary", type="http", auth="public", methods=["POST"], csrf=False)

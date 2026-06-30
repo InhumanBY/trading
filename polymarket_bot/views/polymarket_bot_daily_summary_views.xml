@@ -7,16 +7,15 @@
             <list create="0" string="Daily Summaries">
                 <field name="date"/>
                 <field name="paper" widget="boolean"/>
-                <field name="total_signals"/>
-                <field name="total_trades"/>
+                <field name="positions_closed"/>
                 <field name="positions_delta_neutral"/>
-                <field name="positions_hedged"/>
                 <field name="positions_unhedged"
                        decoration-danger="positions_unhedged > 0"/>
-                <field name="gross_pnl"/>
+                <field name="total_trades"/>
+                <field name="avg_pair_cost"/>
+                <field name="win_rate"/>
                 <field name="net_pnl" decoration-success="net_pnl > 0"
                        decoration-danger="net_pnl &lt; 0"/>
-                <field name="avg_pair_cost"/>
             </list>
         </field>
     </record>

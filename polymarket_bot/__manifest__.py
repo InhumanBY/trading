@@ -9,8 +9,10 @@
         "mail",
         "web",
     ],
+    "post_init_hook": "post_init_hook",
     "data": [
         "data/bot_config_data.xml",
+        "data/cron.xml",
 
         "security/ir.model.access.csv",
 
