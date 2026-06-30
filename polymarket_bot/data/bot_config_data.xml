@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<odoo noupdate="1">
     <record id="polymarket_bot_config_default" model="polymarket_bot.config">
         <field name="name">Polymarket Bot Config</field>
         <field name="bot_status">stopped</field>

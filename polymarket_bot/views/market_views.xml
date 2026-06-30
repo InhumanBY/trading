@@ -61,7 +61,7 @@
                     </group>
                     <notebook>
                         <page string="Price History" name="prices">
-                            <field name="price_ids" nolabel="1">
+                            <field name="price_ids" nolabel="1" readonly="1">
                                 <list>
                                     <field name="tick_time"/>
                                     <field name="yes_ask" string="UP Ask"/>
@@ -70,7 +70,7 @@
                             </field>
                         </page>
                         <page string="Positions" name="positions">
-                            <field name="position_ids" nolabel="1">
+                            <field name="position_ids" nolabel="1" readonly="1">
                                 <list decoration-warning="state in ('one_side_yes','one_side_no')"
                                       decoration-success="state == 'delta_neutral'"
                                       decoration-info="state == 'hedged'"
@@ -90,7 +90,7 @@
                             </field>
                         </page>
                         <page string="Trades" name="trades">
-                            <field name="trade_ids" nolabel="1">
+                            <field name="trade_ids" nolabel="1" readonly="1">
                                 <list>
                                     <field name="trade_time"/>
                                     <field name="side" widget="badge"/>
@@ -106,7 +106,7 @@
                             </field>
                         </page>
                         <page string="Signals" name="signals">
-                            <field name="signal_ids" nolabel="1">
+                            <field name="signal_ids" nolabel="1" readonly="1">
                                 <list decoration-success="acted_on == True"
                                       decoration-muted="acted_on == False">
                                     <field name="signal_time"/>
