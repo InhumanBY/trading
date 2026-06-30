@@ -13,6 +13,7 @@
                        decoration-muted="state == 'expired'"/>
                 <field name="end_time"/>
                 <field name="position_count" string="Positions"/>
+                <field name="price_count" string="Prices"/>
                 <field name="trade_count" string="Trades"/>
                 <field name="signal_count" string="Signals"/>
                 <field name="condition_id" optional="hide"/>

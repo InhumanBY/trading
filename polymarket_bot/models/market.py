@@ -94,6 +94,9 @@ class Market(models.Model):
     signal_count = fields.Integer(
         compute="_compute_counts",
     )
+    price_count = fields.Integer(
+        compute="_compute_counts",
+    )
 
     @api.depends("market_slug", "question", "condition_id")
     def _compute_name(self):
@@ -119,6 +122,7 @@ class Market(models.Model):
             rec.position_count = len(rec.position_ids)
             rec.trade_count = len(rec.trade_ids)
             rec.signal_count = len(rec.signal_ids)
+            rec.price_count = len(rec.price_ids)
 
     def action_view_positions(self):
         return {
