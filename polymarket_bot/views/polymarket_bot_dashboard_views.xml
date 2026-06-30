@@ -5,7 +5,7 @@
         <field name="model">polymarket_bot.config</field>
         <field name="priority">20</field>
         <field name="arch" type="xml">
-            <form string="Dashboard">
+            <form string="Dashboard" create="0" edit="0">
                 <sheet>
                     <widget name="web_ribbon" title="PAPER TRADE" bg_color="bg-warning"
                             invisible="not paper_trading"/>
