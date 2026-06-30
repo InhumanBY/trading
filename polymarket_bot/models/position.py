@@ -1,4 +1,5 @@
 from odoo import models, fields, api
+from . import utils
 
 
 class Position(models.Model):
@@ -47,6 +48,10 @@ class Position(models.Model):
     state_log = fields.Text()
 
     trade_ids = fields.One2many("polymarket_bot.trade", "position_id", string="Trades")
+
+    def _auto_init(self):
+        utils.migrate_market_id_to_fk(self.env.cr, self._table)
+        return super()._auto_init()
 
     @api.depends("qty_yes", "qty_no", "cost_yes", "cost_no", "state")
     def _compute_averages(self):

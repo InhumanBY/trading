@@ -1,4 +1,5 @@
 from odoo import models, fields
+from . import utils
 
 
 class ArbSignal(models.Model):
@@ -28,3 +29,7 @@ class ArbSignal(models.Model):
     acted_on = fields.Boolean(default=False)
     skip_reason = fields.Char()
     signal_time = fields.Datetime(default=fields.Datetime.now, index=True)
+
+    def _auto_init(self):
+        utils.migrate_market_id_to_fk(self.env.cr, self._table)
+        return super()._auto_init()

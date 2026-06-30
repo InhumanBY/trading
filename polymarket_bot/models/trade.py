@@ -1,4 +1,5 @@
 from odoo import models, fields
+from . import utils
 
 
 class Trade(models.Model):
@@ -34,3 +35,7 @@ class Trade(models.Model):
     paper = fields.Boolean(default=True)
     trade_time = fields.Datetime(default=fields.Datetime.now, index=True)
     position_id = fields.Many2one("polymarket_bot.position", ondelete="set null")
+
+    def _auto_init(self):
+        utils.migrate_market_id_to_fk(self.env.cr, self._table)
+        return super()._auto_init()
