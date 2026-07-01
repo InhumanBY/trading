@@ -191,4 +191,5 @@ class Market(models.Model):
             "positions": positions,
             "teaks": teaks,
         }
+        print(data)
         raise exceptions.ValidationError(json.dumps(data, indent=2))
