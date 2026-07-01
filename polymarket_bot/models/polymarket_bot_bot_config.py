@@ -67,6 +67,13 @@ class BotConfig(models.Model):
              "входа. Дополняет max_entry_velocity: velocity усредняет всё окно и может занижать "
              "резкие локальные скачки, этот порог ловит их напрямую через |newest - oldest|.",
     )
+    max_longer_shift = fields.Float(
+        string="Max longer shift (60s)",
+        default=0.10,
+        digits=(10, 4),
+        help="Максимальный сдвиг цены за 60 сек в неблагоприятном направлении. "
+             "Блокирует вход на отскоке внутри сильного тренда.",
+    )
     velocity_min_data_points = fields.Integer(
         string="Velocity min data points",
         default=10,
@@ -187,6 +194,7 @@ class BotConfig(models.Model):
             "stop_hedge_minutes": self.stop_hedge_minutes,
             "max_entry_velocity": self.max_entry_velocity,
             "max_entry_price_shift": self.max_entry_price_shift,
+            "max_longer_shift": self.max_longer_shift,
             "velocity_min_data_points": self.velocity_min_data_points,
             "velocity_min_time_span": self.velocity_min_time_span,
             "max_position_per_market_usd": self.max_position_per_market_usd,
