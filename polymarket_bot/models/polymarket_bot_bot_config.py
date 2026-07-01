@@ -251,10 +251,13 @@ class BotConfig(models.Model):
 
     def get_price_chart_data(self):
         self.ensure_one()
-        tick_time = fields.Datetime.now() - relativedelta(days=1)
+        market_id = self.env["polymarket_bot.market"].search([
+            ("state", "=", "active"),
+        ], order="id", limit=1)
         ticks = self.env["polymarket_bot.market_price"].search(
-            domain=[("tick_time", ">=", tick_time)],
+            domain=[("market_id", "=", market_id.id)],
             order="tick_time asc",
+            limit=10000,
         )
         return {
             "labels": [t.tick_time.isoformat() for t in ticks],
