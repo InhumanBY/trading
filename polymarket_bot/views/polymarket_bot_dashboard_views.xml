@@ -6,6 +6,17 @@
         <field name="priority">20</field>
         <field name="arch" type="xml">
             <form string="Dashboard" create="0" edit="0">
+                <header>
+                    <button name="action_start" string="Start" type="object"
+                            class="oe_highlight"
+                            invisible="bot_status == 'running'"/>
+                    <button name="action_stop" string="Stop" type="object"
+                            class="btn-danger"
+                            invisible="bot_status == 'stopped'"/>
+                    <button name="action_pause" string="Pause" type="object"
+                            class="btn-warning"
+                            invisible="bot_status != 'running'"/>
+                </header>
                 <sheet>
                     <widget name="web_ribbon" title="PAPER TRADE" bg_color="bg-warning"
                             invisible="not paper_trading"/>
@@ -43,17 +54,6 @@
                                    decoration-muted="bot_status == 'stopped'"/>
                             <field name="last_heartbeat"/>
                             <field name="bot_pid" string="PID"/>
-                        </group>
-                        <group>
-                            <button name="action_start" string="Start" type="object"
-                                    class="oe_highlight"
-                                    invisible="bot_status == 'running'"/>
-                            <button name="action_stop" string="Stop" type="object"
-                                    class="btn-danger"
-                                    invisible="bot_status == 'stopped'"/>
-                            <button name="action_pause" string="Pause" type="object"
-                                    class="btn-warning"
-                                    invisible="bot_status != 'running'"/>
                         </group>
                     </group>
 
