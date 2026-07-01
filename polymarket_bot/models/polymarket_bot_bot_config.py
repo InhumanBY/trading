@@ -74,6 +74,14 @@ class BotConfig(models.Model):
         help="Максимальный сдвиг цены за 60 сек в неблагоприятном направлении. "
              "Блокирует вход на отскоке внутри сильного тренда.",
     )
+    max_opposite_level = fields.Float(
+        string="Max opposite level",
+        default=0.65,
+        digits=(10, 4),
+        help="Максимальная цена противоположной стороны для разрешения входа. "
+             "Если при входе в NO yes_ask > порога — вход блокируется (Up слишком дорог). "
+             "Аналогично для YES если no_ask > порога.",
+    )
     velocity_min_data_points = fields.Integer(
         string="Velocity min data points",
         default=10,
@@ -195,6 +203,7 @@ class BotConfig(models.Model):
             "max_entry_velocity": self.max_entry_velocity,
             "max_entry_price_shift": self.max_entry_price_shift,
             "max_longer_shift": self.max_longer_shift,
+            "max_opposite_level": self.max_opposite_level,
             "velocity_min_data_points": self.velocity_min_data_points,
             "velocity_min_time_span": self.velocity_min_time_span,
             "max_position_per_market_usd": self.max_position_per_market_usd,
