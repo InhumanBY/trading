@@ -33,18 +33,18 @@ class Position(models.Model):
     qty_no = fields.Float(
         digits=(16, 3),
     )
-    cost_yes = fields.Float(
+    cost_yes = fields.Monetary(
         digits=(16, 3),
     )
-    cost_no = fields.Float(
+    cost_no = fields.Monetary(
         digits=(16, 3),
     )
 
-    avg_yes = fields.Float(
+    avg_yes = fields.Monetary(
         compute="_compute_averages",
         digits=(10, 3),
     )
-    avg_no = fields.Float(
+    avg_no = fields.Monetary(
         compute="_compute_averages",
         digits=(10, 3),
     )
@@ -52,19 +52,19 @@ class Position(models.Model):
         compute="_compute_averages",
         digits=(16, 3),
     )
-    pair_cost = fields.Float(
+    pair_cost = fields.Monetary(
         compute="_compute_averages",
         digits=(10, 3),
     )
-    locked_profit = fields.Float(
+    locked_profit = fields.Monetary(
         compute="_compute_averages",
         digits=(10, 3),
     )
-    projected_pnl_yes_wins = fields.Float(
+    projected_pnl_yes_wins = fields.Monetary(
         compute="_compute_averages",
         digits=(10, 3),
     )
-    projected_pnl_no_wins = fields.Float(
+    projected_pnl_no_wins = fields.Monetary(
         compute="_compute_averages",
         digits=(10, 3),
     )
@@ -79,7 +79,7 @@ class Position(models.Model):
     hedged_at = fields.Datetime()
     delta_neutral_at = fields.Datetime()
     closed_at = fields.Datetime()
-    final_pnl = fields.Float(
+    final_pnl = fields.Monetary(
         digits=(10, 3),
     )
     unhedged = fields.Boolean(
@@ -101,6 +101,13 @@ class Position(models.Model):
         "position_id",
         string="Trades",
     )
+    currency_id = fields.Many2one(
+        comodel_name="res.currency",
+        compute="_compute_currency_id",
+    )
+
+    def _compute_currency_id(self):
+        self.currency_id = self.env.company.currency_id
 
     @api.depends("winning_side")
     def _compute_result_label(self):

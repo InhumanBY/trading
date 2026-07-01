@@ -9,6 +9,7 @@
                   decoration-danger="final_pnl &lt; 0"
                   decoration-success="final_pnl &gt; 0"
                   decoration-muted="not final_pnl">
+                <field name="currency_id" column_invisible="1"/>
                 <field name="market_id"/>
                 <field name="state" widget="badge"
                        decoration-muted="state in ['empty', 'closed']"
@@ -40,6 +41,7 @@
             <form string="Position" create="0" edit="0">
                 <header>
                     <field name="state" widget="statusbar"/>
+                    <field name="currency_id" invisible="1"/>
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">

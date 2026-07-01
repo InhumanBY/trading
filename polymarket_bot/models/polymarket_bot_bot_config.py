@@ -144,7 +144,7 @@ class BotConfig(models.Model):
     one_side_positions_count = fields.Integer(
         compute="_compute_dashboard",
     )
-    today_net_pnl = fields.Float(
+    today_net_pnl = fields.Monetary(
         compute="_compute_dashboard",
         digits=(10, 4),
     )
@@ -157,7 +157,7 @@ class BotConfig(models.Model):
     today_positions_closed = fields.Integer(
         compute="_compute_dashboard",
     )
-    today_avg_pair_cost = fields.Float(
+    today_avg_pair_cost = fields.Monetary(
         compute="_compute_dashboard",
         digits=(10, 4),
     )
@@ -165,6 +165,13 @@ class BotConfig(models.Model):
         compute="_compute_dashboard",
         digits=(5, 2),
     )
+    currency_id = fields.Many2one(
+        comodel_name="res.currency",
+        compute="_compute_currency_id",
+    )
+
+    def _compute_currency_id(self):
+        self.currency_id = self.env.company.currency_id
 
     @classmethod
     def ensure_singleton(cls, env):

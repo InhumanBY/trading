@@ -16,6 +16,7 @@
                     <button name="action_pause" string="Pause" type="object"
                             class="btn-warning"
                             invisible="bot_status != 'running'"/>
+                    <field name="currency_id" invisible="1"/>
                 </header>
                 <sheet>
                     <widget name="web_ribbon" title="PAPER TRADE" bg_color="bg-warning"
