@@ -186,6 +186,10 @@ class Market(models.Model):
             'unhedged'
         ]
         positions = self.position_ids.read(fields=position_fields)
+        for position in positions:
+            position["opened_at"] = fields.Datetime.to_string(position["opened_at"])
+            position["hedged_at"] = fields.Datetime.to_string(position["hedged_at"])
+            position["closed_at"] = fields.Datetime.to_string(position["closed_at"])
         teaks = []
         for price_id in self.price_ids:
             teaks.append(f"{price_id.tick_time.strftime('%H:%M:%S')} y={str(price_id.yes_ask)} n={str(price_id.no_ask)}")
@@ -194,5 +198,4 @@ class Market(models.Model):
             "positions": positions,
             "teaks": teaks,
         }
-        _logger.info(data)
         raise exceptions.ValidationError(json.dumps(data, indent=2))
