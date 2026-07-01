@@ -1,8 +1,11 @@
 import json
+import logging
 import pytz
 from datetime import datetime
 
 from odoo import exceptions, models, fields, api
+
+_logger = logging.getLogger(__name__)
 
 
 def _name_from_slug(slug):
@@ -191,5 +194,5 @@ class Market(models.Model):
             "positions": positions,
             "teaks": teaks,
         }
-        print(data)
+        _logger.info(data)
         raise exceptions.ValidationError(json.dumps(data, indent=2))
