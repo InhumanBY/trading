@@ -155,7 +155,7 @@ class Market(models.Model):
     def get_price_chart_data(self):
         self.ensure_one()
         ticks = self.env["polymarket_bot.market_price"].search(
-            [("market_id", "=", self.id)],
+            domain=[("market_id", "=", self.id)],
             order="tick_time asc",
             limit=5000,
         )

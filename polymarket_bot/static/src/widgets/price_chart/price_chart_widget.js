@@ -29,9 +29,9 @@ export class PriceChartWidget extends Component {
 
     async _renderChart(resId){
         const data = await this.orm.call(
-            "polymarket_bot.market",
+            this.props.record.resModel,
             "get_price_chart_data",
-            [[resId]]
+            [[resId]],
         );
         this.renderChart(data);
     }

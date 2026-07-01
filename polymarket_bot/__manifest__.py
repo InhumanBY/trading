@@ -27,9 +27,7 @@
     ],
     "assets": {
         "web.assets_backend": [
-            "polymarket_bot/static/src/js/price_chart_widget.js",
-            "polymarket_bot/static/src/xml/price_chart_widget.xml",
-            "polymarket_bot/static/src/scss/price_chart_widget.scss",
+            "polymarket_bot/static/src/widgets/**/*",
         ],
     },
     "installable": True,

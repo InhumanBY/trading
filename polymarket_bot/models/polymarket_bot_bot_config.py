@@ -1,4 +1,7 @@
 import uuid
+
+from dateutil.relativedelta import relativedelta
+
 from odoo import models, fields, api
 
 
@@ -244,4 +247,17 @@ class BotConfig(models.Model):
             "name": "Recent Signals",
             "res_model": "polymarket_bot.arb_signal",
             "view_mode": "list,form",
+        }
+
+    def get_price_chart_data(self):
+        self.ensure_one()
+        tick_time = fields.Datetime.now() - relativedelta(days=1)
+        ticks = self.env["polymarket_bot.market_price"].search(
+            domain=[("tick_time", ">=", tick_time)],
+            order="tick_time asc",
+        )
+        return {
+            "labels": [t.tick_time.isoformat() for t in ticks],
+            "yes_ask": [t.yes_ask for t in ticks],
+            "no_ask": [t.no_ask for t in ticks],
         }

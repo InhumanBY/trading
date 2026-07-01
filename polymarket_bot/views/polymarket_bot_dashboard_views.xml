@@ -14,6 +14,27 @@
                     <div class="o_field_widget o_stat_info mb-3">
                         <h4>Bot Status</h4>
                     </div>
+
+                    <div class="oe_button_box" name="button_box">
+                        <button type="action" name="%(action_polymarket_open_positions)d"
+                                class="oe_stat_button" icon="fa-list">
+                            <field name="open_positions_count" widget="statinfo"
+                                   string="Open"/>
+                        </button>
+                        <button type="action" name="%(action_polymarket_signals)d"
+                                class="oe_stat_button" icon="fa-signal">
+                            <span class="o_stat_text">Signals</span>
+                        </button>
+                        <button type="action" name="%(action_polymarket_trades)d"
+                                class="oe_stat_button" icon="fa-exchange">
+                            <span class="o_stat_text">Trades</span>
+                        </button>
+                        <button type="action" name="%(action_polymarket_daily_summary)d"
+                                class="oe_stat_button" icon="fa-calendar">
+                            <span class="o_stat_text">Daily PNL</span>
+                        </button>
+                    </div>
+
                     <group>
                         <group>
                             <field name="bot_status" widget="badge"
@@ -39,7 +60,7 @@
                     <separator string="Today"/>
 
                     <!-- Section 2: Today's Stats -->
-                    <div class="o_field_widget o_stat_info">
+                    <div>
                         <div class="row">
                             <div class="col-3 text-center">
                                 <field name="today_net_pnl" nolabel="1"
@@ -66,29 +87,8 @@
                             </div>
                         </div>
                     </div>
-
-                    <separator string="Open Positions"/>
-
-                    <!-- Section 3: Navigation buttons -->
-                    <div class="oe_button_box" name="button_box">
-                        <button type="action" name="%(action_polymarket_open_positions)d"
-                                class="oe_stat_button" icon="fa-list">
-                            <field name="open_positions_count" widget="statinfo"
-                                   string="Open"/>
-                        </button>
-                        <button type="action" name="%(action_polymarket_signals)d"
-                                class="oe_stat_button" icon="fa-signal">
-                            <span class="o_stat_text">Signals</span>
-                        </button>
-                        <button type="action" name="%(action_polymarket_trades)d"
-                                class="oe_stat_button" icon="fa-exchange">
-                            <span class="o_stat_text">Trades</span>
-                        </button>
-                        <button type="action" name="%(action_polymarket_daily_summary)d"
-                                class="oe_stat_button" icon="fa-calendar">
-                            <span class="o_stat_text">Daily PNL</span>
-                        </button>
-                    </div>
+                    <separator string="Price Chart"/>
+                    <widget name="price_chart_widget"/>
                 </sheet>
             </form>
         </field>
