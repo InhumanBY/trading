@@ -1,7 +1,8 @@
+import json
 import pytz
 from datetime import datetime
 
-from odoo import models, fields, api
+from odoo import exceptions, models, fields, api
 
 
 def _name_from_slug(slug):
@@ -164,3 +165,30 @@ class Market(models.Model):
             "yes_ask": [t.yes_ask for t in ticks],
             "no_ask": [t.no_ask for t in ticks],
         }
+
+    def action_get_data_for_ai(self):
+        self.ensure_one()
+        position_fields = [
+            'market_id',
+            'state',
+            'qty_yes',
+            'qty_no',
+            'avg_yes',
+            'avg_no',
+            'pair_cost',
+            'final_pnl',
+            'opened_at',
+            'hedged_at',
+            'closed_at',
+            'unhedged'
+        ]
+        positions = self.position_ids.read(fields=position_fields)
+        teaks = []
+        for price_id in self.price_ids:
+            teaks.append(f"{price_id.tick_time.strftime('%H:%M:%S')} y={str(price_id.yes_ask)} n={str(price_id.no_ask)}")
+        data = {
+            "market": self.id,
+            "positions": positions,
+            "teaks": teaks,
+        }
+        raise exceptions.ValidationError(json.dumps(data, indent=2))
