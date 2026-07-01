@@ -193,7 +193,7 @@ class BotConfig(models.Model):
                 rec.today_positions_unhedged = summary.positions_unhedged
                 rec.today_avg_pair_cost = summary.avg_pair_cost
                 rec.today_positions_closed = summary.positions_closed
-                rec.total_win_rate = summary.total_win_rate
+                rec.total_win_rate = summary.win_rate
             else:
                 rec.today_net_pnl = 0.0
                 rec.today_positions_delta_neutral = 0
