@@ -154,9 +154,16 @@ class BotConfig(models.Model):
     today_positions_unhedged = fields.Integer(
         compute="_compute_dashboard",
     )
+    today_positions_closed = fields.Integer(
+        compute="_compute_dashboard",
+    )
     today_avg_pair_cost = fields.Float(
         compute="_compute_dashboard",
         digits=(10, 4),
+    )
+    total_win_rate = fields.Float(
+        compute="_compute_dashboard",
+        digits=(5, 2),
     )
 
     @classmethod
@@ -185,11 +192,15 @@ class BotConfig(models.Model):
                 rec.today_positions_delta_neutral = summary.positions_delta_neutral
                 rec.today_positions_unhedged = summary.positions_unhedged
                 rec.today_avg_pair_cost = summary.avg_pair_cost
+                rec.today_positions_closed = summary.positions_closed
+                rec.total_win_rate = summary.total_win_rate
             else:
                 rec.today_net_pnl = 0.0
                 rec.today_positions_delta_neutral = 0
                 rec.today_positions_unhedged = 0
                 rec.today_avg_pair_cost = 0.0
+                rec.today_positions_closed = 0
+                rec.total_win_rate = 0.0
 
     def get_config_for_bot(self):
         self.ensure_one()

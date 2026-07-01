@@ -62,32 +62,45 @@
                     <!-- Section 2: Today's Stats -->
                     <div>
                         <div class="row">
-                            <div class="col-3 text-center">
+                            <div class="col-2 text-center">
+                                <field name="today_positions_closed" nolabel="1"
+                                       class="o_stat_value fw-bold"/>
+                                <div class="o_stat_text">Positions Closed</div>
+                            </div>
+                            <div class="col-2 text-center">
+                                <field name="today_positions_delta_neutral" nolabel="1"
+                                       class="o_stat_value fw-bold"/>
+                                <div class="o_stat_text">Delta Neutral</div>
+                            </div>
+                            <div class="col-2 text-center">
+                                <field name="today_positions_unhedged" nolabel="1"
+                                       class="o_stat_value fw-bold"
+                                       decoration-danger="today_positions_unhedged > 0"/>
+                                <div class="o_stat_text">Unhedged</div>
+                            </div>
+                            <div class="col-2 text-center">
                                 <field name="today_net_pnl" nolabel="1"
-                                       class="o_stat_value"
+                                       class="o_stat_value fw-bold"
                                        decoration-success="today_net_pnl > 0"
                                        decoration-danger="today_net_pnl &lt; 0"/>
                                 <div class="o_stat_text">Net PNL</div>
                             </div>
-                            <div class="col-3 text-center">
-                                <field name="today_positions_delta_neutral" nolabel="1"
-                                       class="o_stat_value"/>
-                                <div class="o_stat_text">Delta Neutral</div>
-                            </div>
-                            <div class="col-3 text-center">
-                                <field name="today_positions_unhedged" nolabel="1"
-                                       class="o_stat_value"
-                                       decoration-danger="today_positions_unhedged > 0"/>
-                                <div class="o_stat_text">Unhedged</div>
-                            </div>
-                            <div class="col-3 text-center">
+                            <div class="col-2 text-center">
                                 <field name="today_avg_pair_cost" nolabel="1"
-                                       class="o_stat_value"/>
+                                       class="o_stat_value fw-bold"/>
                                 <div class="o_stat_text">Avg Pair Cost</div>
+                            </div>
+                            <div class="col-2 text-center">
+                                <field name="total_win_rate" nolabel="1"
+                                       class="o_stat_value fw-bold"
+                                       decoration-success="total_win_rate >= 80"
+                                       decoration-warning="total_win_rate &lt; 80 and total_win_rate >= 60"
+                                       decoration-danger="total_win_rate &lt; 60 and total_win_rate > 0"/>
+                                <div class="o_stat_text">Win Rate %</div>
                             </div>
                         </div>
                     </div>
-                    <separator string="Price Chart"/>
+                    <separator string="Current Price Chart"/>
                     <widget name="price_chart_widget"/>
                 </sheet>
             </form>
