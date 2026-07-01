@@ -52,6 +52,14 @@ class BotConfig(models.Model):
     stop_entry_minutes = fields.Float(
         default=2.0,
     )
+    max_entry_minutes = fields.Float(
+        string="Max entry minutes",
+        default=8.0,
+        help="Максимальное время от начала маркета (в минутах) в течение которого "
+             "разрешён вход в новую позицию. Если маркет идёт дольше — entry блокируется. "
+             "Для 15-минутных раундов значение 8.0 означает вход только в первые 8 минут, "
+             "оставляя минимум 7 минут для хеджа.",
+    )
     stop_hedge_minutes = fields.Float(
         default=1.0,
     )
@@ -220,6 +228,7 @@ class BotConfig(models.Model):
             "position_size_usd": self.position_size_usd,
             "position_size_shares": self.position_size_shares,
             "stop_entry_minutes": self.stop_entry_minutes,
+            "max_entry_minutes": self.max_entry_minutes,
             "stop_hedge_minutes": self.stop_hedge_minutes,
             "max_entry_velocity": self.max_entry_velocity,
             "max_entry_price_shift": self.max_entry_price_shift,

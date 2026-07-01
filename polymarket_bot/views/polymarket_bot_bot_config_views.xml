@@ -55,6 +55,7 @@
                                     <field name="position_size_usd" string="Position Size (USD)"/>
                                     <field name="position_size_shares" string="Position Size (Shares)"/>
                                     <field name="stop_entry_minutes"/>
+                                    <field name="max_entry_minutes"/>
                                     <field name="stop_hedge_minutes"/>
                                 </group>
                             </group>
