@@ -191,7 +191,7 @@ class Market(models.Model):
             position["hedged_at"] = fields.Datetime.to_string(position["hedged_at"])
             position["closed_at"] = fields.Datetime.to_string(position["closed_at"])
         teaks = []
-        for price_id in self.price_ids:
+        for price_id in self.price_ids.sorted('tick_time'):
             teaks.append(f"{price_id.tick_time.strftime('%H:%M:%S')} y={str(price_id.yes_ask)} n={str(price_id.no_ask)}")
         data = {
             "market": self.id,
