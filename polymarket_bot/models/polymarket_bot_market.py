@@ -161,7 +161,6 @@ class Market(models.Model):
         ticks = self.env["polymarket_bot.market_price"].search(
             domain=[("market_id", "=", self.id)],
             order="tick_time asc",
-            limit=5000,
         )
         return {
             "labels": [t.tick_time.isoformat() for t in ticks],
