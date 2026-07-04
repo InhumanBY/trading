@@ -71,6 +71,10 @@
                                     <field name="tick_time"/>
                                     <field name="yes_ask" string="UP Ask"/>
                                     <field name="no_ask" string="DOWN Ask"/>
+                                    <field name="yes_bid"/>
+                                    <field name="no_bid"/>
+                                    <field name="yes_spread"/>
+                                    <field name="no_spread"/>
                                 </list>
                             </field>
                         </page>
