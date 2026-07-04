@@ -116,6 +116,9 @@ class PolymarketApi(http.Controller):
                 "market_id": market.id,
                 "yes_ask": body.get("yes_ask", 0),
                 "no_ask": body.get("no_ask", 0),
+                "yes_bid": body.get("yes_bid", 0),
+                "no_bid": body.get("no_bid", 0),
+                "price_source": body.get("price_source", "ws"),
             })
         except Exception as e:
             _logger.exception("price create error")
