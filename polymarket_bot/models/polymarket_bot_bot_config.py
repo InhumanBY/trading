@@ -291,3 +291,18 @@ class BotConfig(models.Model):
             "yes_ask": [t.yes_ask for t in ticks],
             "no_ask": [t.no_ask for t in ticks],
         }
+
+    def get_spread_chart_data(self):
+        self.ensure_one()
+        market_id = self.env["polymarket_bot.market"].search([
+            ("state", "=", "active"),
+        ], order="id", limit=1)
+        ticks = self.env["polymarket_bot.market_price"].search(
+            domain=[("market_id", "=", market_id.id)],
+            order="tick_time asc",
+            limit=10000,
+        )
+        return {
+            "labels": [t.tick_time.isoformat() for t in ticks],
+            "yes_spread": [t.yes_spread for t in ticks],
+        }

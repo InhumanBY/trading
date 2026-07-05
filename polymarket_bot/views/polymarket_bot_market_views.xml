@@ -62,8 +62,9 @@
                         </group>
                     </group>
                     <notebook>
-                        <page string="Price Chart" name="price_chart">
+                        <page string="Charts" name="charts">
                             <widget name="price_chart_widget"/>
+                            <widget name="spread_chart_widget"/>
                         </page>
                         <page string="Price History" name="prices">
                             <field name="price_ids" nolabel="1" readonly="1">

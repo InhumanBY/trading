@@ -168,6 +168,17 @@ class Market(models.Model):
             "no_ask": [t.no_ask for t in ticks],
         }
 
+    def get_spread_chart_data(self):
+        self.ensure_one()
+        ticks = self.env["polymarket_bot.market_price"].search(
+            domain=[("market_id", "=", self.id)],
+            order="tick_time asc",
+        )
+        return {
+            "labels": [t.tick_time.isoformat() for t in ticks],
+            "yes_spread": [t.yes_spread for t in ticks],
+        }
+
     def action_get_data_for_ai(self):
         self.ensure_one()
         position_fields = [

@@ -101,8 +101,9 @@
                             </div>
                         </div>
                     </div>
-                    <separator string="Current Price Chart"/>
+                    <separator string="Current Charts"/>
                     <widget name="price_chart_widget"/>
+                    <widget name="spread_chart_widget"/>
                 </sheet>
             </form>
         </field>
