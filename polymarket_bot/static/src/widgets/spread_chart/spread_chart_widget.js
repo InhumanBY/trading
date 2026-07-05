@@ -49,7 +49,7 @@ export class SpreadChartWidget extends Component {
                     {
                         label: "Up spread",
                         data: data.yes_spread,
-                        borderColor: "#378ADD",
+                        borderColor: "#02530a",
                         borderWidth: 2,
                         pointRadius: 0,
                         tension: 0.15,
