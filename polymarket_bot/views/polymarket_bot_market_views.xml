@@ -76,6 +76,10 @@
                                     <field name="no_bid"/>
                                     <field name="yes_spread"/>
                                     <field name="no_spread"/>
+                                    <field name="yes_trade_size" optional="show"/>
+                                    <field name="no_trade_size" optional="show"/>
+                                    <field name="yes_trade_side" optional="show"/>
+                                    <field name="no_trade_side" optional="show"/>
                                 </list>
                             </field>
                         </page>

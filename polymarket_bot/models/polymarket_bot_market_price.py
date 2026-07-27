@@ -37,6 +37,27 @@ class MarketPrice(models.Model):
         default="ws",
     )
 
+    # Размер и сторона конкретного fill, вызвавшего это изменение цены
+    # (из WS price_changes[].size / .side). Char — безопаснее Selection
+    # для данных из внешнего API (не ловим ValidationError на неожиданном значении).
+    yes_trade_size = fields.Float(
+        string="Yes Trade Size",
+        help="Размер последней сделки (fill), вызвавшей это изменение "
+             "цены на стороне YES/UP. Из WS price_changes[].size.",
+    )
+    no_trade_size = fields.Float(
+        string="No Trade Size",
+        help="То же для стороны NO/DOWN.",
+    )
+    yes_trade_side = fields.Char(
+        string="Yes Trade Side",
+        help="Сторона сделки YES/UP: BUY или SELL. Из WS price_changes[].side.",
+    )
+    no_trade_side = fields.Char(
+        string="No Trade Side",
+        help="Сторона сделки NO/DOWN: BUY или SELL.",
+    )
+
     @api.depends("yes_ask", "yes_bid", "no_ask", "no_bid")
     def _compute_spreads(self):
         for rec in self:
