@@ -93,6 +93,38 @@ class BotConfig(models.Model):
              "Если при входе в NO yes_ask > порога — вход блокируется (Up слишком дорог). "
              "Аналогично для YES если no_ask > порога.",
     )
+    soft_hedge_trigger_minutes = fields.Float(
+        string="Soft Hedge Trigger (minutes before close)",
+        default=3.0,
+        help="Если обычный хедж (по target_pair_cost) не найден и до "
+             "закрытия рынка осталось меньше этого времени — бот соглашается "
+             "на худшую цену хеджа (см. soft_hedge_max_pair_cost) вместо "
+             "того чтобы оставаться полностью unhedged до экспирации.",
+    )
+    soft_hedge_max_pair_cost = fields.Float(
+        string="Soft Hedge Max Pair Cost",
+        default=0.95,
+        digits=(10, 4),
+        help="Ослабленный потолок pair_cost для мягкого хеджа (см. "
+             "soft_hedge_trigger_minutes). Должен быть заметно ближе к 1.0, "
+             "чем target_pair_cost, но не превышать разумный предел.",
+    )
+    max_recent_range = fields.Float(
+        string="Max Recent Price Range",
+        default=0.18,
+        digits=(10, 4),
+        help="Порог размаха цены (max-min) за recent_range_window_seconds. "
+             "При превышении — вход блокируется независимо от направления "
+             "движения (ловит V-образные развороты/отскоки после сильного "
+             "движения, которые направленные velocity/longer_shift проверки "
+             "могут пропустить).",
+    )
+    recent_range_window_seconds = fields.Float(
+        string="Recent Range Window (seconds)",
+        default=600.0,
+        help="Окно в секундах, за которое считается размах цены для "
+             "max_recent_range. По умолчанию 600с (10 минут).",
+    )
     velocity_min_data_points = fields.Integer(
         string="Velocity min data points",
         default=10,
@@ -234,6 +266,10 @@ class BotConfig(models.Model):
             "max_entry_price_shift": self.max_entry_price_shift,
             "max_longer_shift": self.max_longer_shift,
             "max_opposite_level": self.max_opposite_level,
+            "soft_hedge_trigger_minutes": self.soft_hedge_trigger_minutes,
+            "soft_hedge_max_pair_cost": self.soft_hedge_max_pair_cost,
+            "max_recent_range": self.max_recent_range,
+            "recent_range_window_seconds": self.recent_range_window_seconds,
             "velocity_min_data_points": self.velocity_min_data_points,
             "velocity_min_time_span": self.velocity_min_time_span,
             "max_position_per_market_usd": self.max_position_per_market_usd,

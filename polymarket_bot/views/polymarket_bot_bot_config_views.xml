@@ -47,7 +47,11 @@
                                     <field name="max_entry_velocity"/>
                                     <field name="max_entry_price_shift"/>
                                     <field name="max_longer_shift"/>
+                                    <field name="max_recent_range"/>
+                                    <field name="recent_range_window_seconds"/>
                                     <field name="max_opposite_level"/>
+                                    <field name="soft_hedge_trigger_minutes"/>
+                                    <field name="soft_hedge_max_pair_cost"/>
                                     <field name="velocity_min_data_points"/>
                                     <field name="velocity_min_time_span"/>
                                 </group>
