@@ -1,0 +1,203 @@
+// Design tokens — shared by the page and the (portal-rendered) popover.
+.o_scp_setup,
+.o_scp_guide {
+    --scp-accent: var(--primary, #714B67);
+    --scp-ok: var(--success, #28a745);
+    --scp-warn: var(--warning, #f0ad4e);
+    --scp-danger: var(--danger, #d9534f);
+    --scp-surface: var(--card-bg, var(--body-bg, #fff));
+    --scp-line: color-mix(in srgb, var(--body-color, #111) 12%, transparent);
+    --scp-muted: color-mix(in srgb, var(--body-color, #111) 55%, transparent);
+}
+
+// ----- icon primitives (global) -------------------------------------------
+.scp-icon { width: 1.1em; height: 1.1em; vertical-align: -0.125em; flex-shrink: 0; }
+.scp-icon-2x .scp-icon { width: 2em; height: 2em; }
+.scp-spin { animation: scp-spin 1s linear infinite; }
+@keyframes scp-spin { to { transform: rotate(360deg); } }
+
+// ----- shared components (page + popover) ---------------------------------
+.o_scp_code {
+    position: relative;
+    background: color-mix(in srgb, var(--body-color, #111) 6%, transparent);
+    pre { padding: 1rem 1.1rem; margin: 0; white-space: pre; overflow-x: auto; }
+    code { color: var(--body-color); font-size: 0.82rem; }
+}
+.o_scp_copybtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    padding: 0 0.9rem;
+    font-size: 1.05rem;
+    color: var(--scp-muted);
+    background: color-mix(in srgb, var(--body-color, #111) 4%, transparent);
+    transition: color 0.15s, background 0.15s;
+    &:hover { color: var(--scp-accent); background: color-mix(in srgb, var(--scp-accent) 12%, transparent); }
+    &--float {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        padding: 0.35rem 0.5rem;
+        background: color-mix(in srgb, var(--body-color, #111) 8%, transparent);
+    }
+}
+.o_scp_client_ico {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    color: var(--scp-accent);
+    img { width: 1.6rem; height: 1.6rem; object-fit: contain; }
+}
+
+// ----- page layout --------------------------------------------------------
+.o_scp_setup {
+    background: color-mix(in srgb, var(--scp-accent) 4%, var(--body-bg, #fff));
+
+    .o_scp_wrap { max-width: 818px; padding: 2.5rem 1.5rem 4rem; }
+
+    .o_scp_label {
+        font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em;
+        text-transform: uppercase; color: var(--scp-muted);
+    }
+
+    // hero
+    .o_scp_hero {
+        display: flex; align-items: center; gap: 1.25rem;
+        padding: 1.75rem; margin-bottom: 1.5rem;
+        background: color-mix(in srgb, var(--scp-accent) 9%, var(--scp-surface));
+        border: 1px solid color-mix(in srgb, var(--scp-accent) 16%, transparent);
+        &--ready {
+            background: color-mix(in srgb, var(--scp-ok) 9%, var(--scp-surface));
+            border-color: color-mix(in srgb, var(--scp-ok) 22%, transparent);
+        }
+    }
+    .o_scp_hero_badge {
+        display: flex; align-items: center; justify-content: center;
+        width: 56px; height: 56px; flex-shrink: 0; border-radius: 16px;
+        font-size: 1.6rem; color: var(--scp-accent);
+        background: color-mix(in srgb, var(--scp-accent) 15%, var(--scp-surface));
+    }
+    .o_scp_hero--ready .o_scp_hero_badge {
+        color: var(--scp-ok);
+        background: color-mix(in srgb, var(--scp-ok) 15%, var(--scp-surface));
+    }
+    .o_scp_eyebrow {
+        font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em;
+        color: var(--scp-accent); margin-bottom: 0.35rem;
+    }
+    .o_scp_hero--ready .o_scp_eyebrow { color: var(--scp-ok); }
+    .o_scp_title { font-size: 1.6rem; font-weight: 650; letter-spacing: -0.01em; }
+    .o_scp_hero_score { flex-shrink: 0; align-self: flex-start; font-variant-numeric: tabular-nums; }
+    .o_scp_score_num { font-size: 1.6rem; font-weight: 700; color: var(--body-color); }
+    .o_scp_score_den { font-size: 1rem; color: var(--scp-muted); }
+
+    // cards
+    .o_scp_card {
+        display: block; padding: 1.5rem; margin-bottom: 1.25rem;
+        background: var(--scp-surface); border: 1px solid var(--scp-line);
+    }
+    .o_scp_card_head {
+        display: flex; align-items: center; justify-content: space-between;
+        margin-bottom: 0.75rem;
+    }
+
+    // buttons
+    .o_scp_btn { padding: 0.5rem 1rem; font-weight: 500; }
+    .o_scp_btn--soft {
+        background: color-mix(in srgb, var(--scp-accent) 12%, transparent);
+        color: var(--scp-accent); border: 0;
+        &:hover { background: color-mix(in srgb, var(--scp-accent) 20%, transparent); color: var(--scp-accent); }
+    }
+    .o_scp_ghost {
+        padding: 0.3rem 0.7rem; font-size: 0.85rem; font-weight: 500;
+        color: var(--scp-accent);
+        background: color-mix(in srgb, var(--scp-accent) 8%, transparent);
+        border: 1px solid color-mix(in srgb, var(--scp-accent) 18%, transparent);
+        white-space: nowrap;
+        &:hover { background: color-mix(in srgb, var(--scp-accent) 16%, transparent); color: var(--scp-accent); }
+    }
+
+    // diagnostic rows
+    .o_scp_row {
+        display: flex; align-items: center; gap: 0.9rem;
+        padding: 0.85rem 0; border-top: 1px solid var(--scp-line);
+    }
+    .o_scp_dot {
+        display: flex; align-items: center; justify-content: center;
+        width: 34px; height: 34px; flex-shrink: 0; font-size: 1.05rem;
+        &--ok { color: var(--scp-ok); background: color-mix(in srgb, var(--scp-ok) 14%, transparent); }
+        &--warn { color: var(--scp-warn); background: color-mix(in srgb, var(--scp-warn) 16%, transparent); }
+    }
+    .o_scp_row_title { font-weight: 600; line-height: 1.2; }
+    .o_scp_row_hint { font-size: 0.85rem; color: var(--scp-muted); }
+
+    // API key rows
+    .o_scp_key {
+        display: flex; align-items: center; gap: 0.9rem;
+        padding: 0.85rem 0; border-top: 1px solid var(--scp-line);
+    }
+    .o_scp_key_ico {
+        display: flex; align-items: center; justify-content: center;
+        width: 34px; height: 34px; flex-shrink: 0; font-size: 1.05rem;
+        color: var(--scp-accent);
+        background: color-mix(in srgb, var(--scp-accent) 12%, transparent);
+        border-radius: 9px;
+    }
+    .o_scp_stale { color: var(--scp-warn); font-weight: 500; }
+    .o_scp_ghost--danger {
+        color: var(--scp-danger);
+        background: color-mix(in srgb, var(--scp-danger) 8%, transparent);
+        border-color: color-mix(in srgb, var(--scp-danger) 18%, transparent);
+        &:hover { background: color-mix(in srgb, var(--scp-danger) 16%, transparent); color: var(--scp-danger); }
+    }
+
+    // probe panel
+    .o_scp_probe {
+        margin-top: 1rem; padding: 1rem 1.15rem;
+        background: color-mix(in srgb, var(--body-color, #111) 4%, transparent);
+    }
+    .o_scp_probe_row {
+        display: flex; align-items: center; gap: 0.6rem; padding: 0.2rem 0;
+        code { color: var(--body-color); }
+    }
+    .o_scp_probe_ico { width: 1.1rem; display: inline-flex; }
+
+    // client matrix
+    .o_scp_clients {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 0.6rem;
+    }
+    .o_scp_client {
+        display: flex; align-items: center; gap: 0.6rem;
+        padding: 0.7rem 0.85rem; text-align: left;
+        background: var(--scp-surface);
+        border: 1px solid var(--scp-line);
+        transition: border-color 0.15s, background 0.15s, transform 0.1s;
+        &:hover {
+            border-color: color-mix(in srgb, var(--scp-accent) 45%, transparent);
+            background: color-mix(in srgb, var(--scp-accent) 5%, var(--scp-surface));
+        }
+        &:active { transform: translateY(1px); }
+    }
+    .o_scp_client_name { font-weight: 500; font-size: 0.9rem; }
+
+    .min-w-0 { min-width: 0; }
+}
+
+// ----- popover guide ------------------------------------------------------
+.o_scp_guide {
+    width: 545px;
+    max-width: 90vw;
+    padding: 1rem;
+}
+.o_scp_guide_head {
+    display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.75rem;
+}
+.o_scp_guide_steps {
+    padding-left: 1.1rem; margin-bottom: 0.75rem;
+    font-size: 0.85rem; color: var(--scp-muted);
+    li { margin-bottom: 0.2rem; }
+}

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="svn_mcp_server.SetupAssistant">
+        <div class="o_scp_setup h-100 overflow-auto">
+            <div class="o_scp_wrap mx-auto">
+
+                <t t-if="state.loading">
+                    <div class="text-center text-muted py-5">
+                        <span class="scp-spin d-inline-flex scp-icon-2x"><t t-call="svn_mcp_server.icon_circle_notch"/></span>
+                    </div>
+                </t>
+
+                <t t-else="">
+                    <!-- Hero -->
+                    <div class="o_scp_hero rounded-3" t-att-class="ready ? 'o_scp_hero--ready' : ''">
+                        <div class="o_scp_hero_badge">
+                            <t t-if="ready" t-call="svn_mcp_server.icon_plugs_connected"/>
+                            <t t-else="" t-call="svn_mcp_server.icon_plug"/>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="o_scp_eyebrow">MCP · SETUP ASSISTANT</div>
+                            <h1 class="o_scp_title mb-1">
+                                <t t-if="ready">You're connected</t>
+                                <t t-else="">Connect your AI client</t>
+                            </h1>
+                            <p class="text-muted mb-0">
+                                <t t-if="ready">Every step checks out. Point any MCP-compatible AI client at this instance.</t>
+                                <t t-else="">A few steps to expose this Odoo to any MCP-compatible AI client.</t>
+                            </p>
+                        </div>
+                        <div class="o_scp_hero_score">
+                            <span class="o_scp_score_num" t-esc="readyCount"/><span class="o_scp_score_den">/3</span>
+                        </div>
+                    </div>
+
+                    <!-- Diagnostics -->
+                    <section class="o_scp_card rounded-3">
+                        <div class="o_scp_card_head">
+                            <span class="o_scp_label">Diagnostics</span>
+                            <button class="btn btn-primary o_scp_btn rounded-2 d-inline-flex align-items-center gap-2"
+                                    t-on-click="testConnection" t-att-disabled="state.probing">
+                                <span t-att-class="state.probing ? 'scp-spin d-inline-flex' : 'd-inline-flex'">
+                                    <t t-call="svn_mcp_server.icon_plug"/>
+                                </span>
+                                <t t-if="state.probing">Testing…</t>
+                                <t t-else="">Test Connection</t>
+                            </button>
+                        </div>
+
+                        <t t-foreach="checks" t-as="c" t-key="c.key">
+                            <div class="o_scp_row">
+                                <span class="o_scp_dot rounded-circle" t-att-class="c.ok ? 'o_scp_dot--ok' : 'o_scp_dot--warn'">
+                                    <t t-if="c.ok" t-call="svn_mcp_server.icon_check"/>
+                                    <t t-else="" t-call="svn_mcp_server.icon_warning_circle"/>
+                                </span>
+                                <div class="flex-grow-1 min-w-0">
+                                    <div class="o_scp_row_title" t-esc="c.label"/>
+                                    <div class="o_scp_row_hint" t-esc="c.hint"/>
+                                </div>
+                                <t t-if="!c.ok">
+                                    <button class="btn o_scp_ghost rounded-2 d-inline-flex align-items-center gap-1"
+                                            t-on-click="() => c.key === 'apikey' ? this.generateApiKey() : c.key === 'models' ? this.openModels() : this.openSettings()">
+                                        <t t-if="c.key === 'apikey'">Generate</t>
+                                        <t t-elif="c.key === 'models'">Add</t>
+                                        <t t-else="">Enable</t>
+                                        <t t-call="svn_mcp_server.icon_arrow_right"/>
+                                    </button>
+                                </t>
+                            </div>
+                        </t>
+
+                        <!-- Live endpoint probe -->
+                        <t t-if="state.probe">
+                            <div class="o_scp_probe rounded-3">
+                                <span class="o_scp_label mb-2 d-block">Live endpoints</span>
+                                <t t-foreach="[['health','/mcp/health'],['auth','/mcp/auth/validate'],['models','/mcp/models']]" t-as="p" t-key="p[0]">
+                                    <div class="o_scp_probe_row">
+                                        <span class="o_scp_probe_ico">
+                                            <t t-if="state.probe[p[0]] === 'ok'"><span class="text-success d-inline-flex"><t t-call="svn_mcp_server.icon_check"/></span></t>
+                                            <t t-elif="state.probe[p[0]] === 'fail'"><span class="text-danger d-inline-flex"><t t-call="svn_mcp_server.icon_x"/></span></t>
+                                            <t t-else=""><span class="text-muted scp-spin d-inline-flex"><t t-call="svn_mcp_server.icon_circle_notch"/></span></t>
+                                        </span>
+                                        <code t-esc="p[1]"/>
+                                    </div>
+                                </t>
+
+                                <!-- Data read sanity: catches the "AI returns null" case -->
+                                <t t-if="state.probe.read">
+                                    <div class="o_scp_probe_row">
+                                        <span class="o_scp_probe_ico">
+                                            <t t-if="state.probe.read.ok and state.probe.read.count > 0"><span class="text-success d-inline-flex"><t t-call="svn_mcp_server.icon_check"/></span></t>
+                                            <t t-else=""><span class="text-warning d-inline-flex"><t t-call="svn_mcp_server.icon_warning_circle"/></span></t>
+                                        </span>
+                                        <span>
+                                            <t t-if="state.probe.read.ok and state.probe.read.count > 0">Data flows &#183; <code t-esc="state.probe.read.model"/> has <t t-esc="state.probe.read.count"/> records the AI can query</t>
+                                            <t t-elif="state.probe.read.ok">Exposed but empty &#183; <code t-esc="state.probe.read.model"/> has 0 records, so queries here return nothing</t>
+                                            <t t-elif="state.probe.read.reason === 'no-models'">No model exposed &#183; every AI query returns empty until you add one below</t>
+                                            <t t-else="">Read failed on <code t-esc="state.probe.read.model"/> &#183; check the user's access rights</t>
+                                        </span>
+                                    </div>
+                                </t>
+                            </div>
+                        </t>
+                    </section>
+
+                    <!-- API keys -->
+                    <section class="o_scp_card rounded-3">
+                        <div class="o_scp_card_head">
+                            <span class="o_scp_label">API keys</span>
+                            <button class="btn o_scp_btn o_scp_btn--soft rounded-2 d-inline-flex align-items-center gap-2" t-on-click="generateApiKey">
+                                <t t-call="svn_mcp_server.icon_key"/>Generate
+                            </button>
+                        </div>
+                        <t t-if="state.status.api_keys.length">
+                            <t t-foreach="state.status.api_keys" t-as="k" t-key="k.id">
+                                <div class="o_scp_key">
+                                    <span class="o_scp_key_ico"><t t-call="svn_mcp_server.icon_key"/></span>
+                                    <div class="flex-grow-1 min-w-0">
+                                        <div class="o_scp_row_title text-truncate" t-esc="k.name"/>
+                                        <div class="o_scp_row_hint">
+                                            <t t-if="k.scope">scope <t t-esc="k.scope"/> · </t>created <t t-esc="k.create_date"/>
+                                            <span t-if="keyStale(k)" class="o_scp_stale"> · 30+ days old, consider rotating</span>
+                                        </div>
+                                    </div>
+                                    <button class="btn o_scp_ghost o_scp_ghost--danger rounded-2 d-inline-flex align-items-center gap-1"
+                                            t-on-click="() => this.revokeKey(k)">
+                                        <t t-call="svn_mcp_server.icon_trash"/>Terminate
+                                    </button>
+                                </div>
+                            </t>
+                        </t>
+                        <t t-else="">
+                            <p class="o_scp_row_hint mb-0">No API key yet. Generate one to authenticate a client.</p>
+                        </t>
+                    </section>
+
+                    <!-- Client configuration -->
+                    <section class="o_scp_card rounded-3">
+                        <span class="o_scp_label">Connect your client</span>
+                        <p class="o_scp_row_hint mt-1 mb-3">Pick your client for tailored setup. Access stays limited to the models you expose above.</p>
+
+                        <div class="o_scp_clients">
+                            <t t-foreach="clients" t-as="cl" t-key="cl.id">
+                                <button class="o_scp_client rounded-3" t-on-click="(ev) => this.openClient(ev, cl)">
+                                    <span class="o_scp_client_ico">
+                                        <img t-if="cl.logo" t-att-src="clientLogo(cl)" t-att-alt="cl.name"/>
+                                        <t t-else="" t-call="svn_mcp_server.icon_plug"/>
+                                    </span>
+                                    <span class="o_scp_client_name" t-esc="cl.name"/>
+                                </button>
+                            </t>
+                        </div>
+                    </section>
+
+                </t>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="svn_mcp_server.ClientGuide">
+        <div class="o_scp_guide">
+            <div class="o_scp_guide_head">
+                <span class="o_scp_client_ico">
+                    <img t-if="logo" t-att-src="logo" t-att-alt="props.client.name"/>
+                    <t t-else="" t-call="svn_mcp_server.icon_plug"/>
+                </span>
+                <span class="fw-bold" t-esc="props.client.name"/>
+            </div>
+            <ol class="o_scp_guide_steps">
+                <t t-foreach="guide.steps" t-as="st" t-key="st_index">
+                    <li>
+                        <span t-esc="st"/>
+                        <div t-if="st_index === 0 and guide.code" class="o_scp_code rounded-2 mt-2">
+                            <pre class="mb-0"><code t-esc="guide.code"/></pre>
+                            <button class="o_scp_copybtn o_scp_copybtn--float rounded-2" t-on-click="() => props.copy(guide.code)">
+                                <t t-call="svn_mcp_server.icon_clipboard"/>
+                            </button>
+                        </div>
+                    </li>
+                </t>
+            </ol>
+            <small t-if="guide.code" class="text-muted d-block mt-2">
+                Replace <code>&lt;your-api-key&gt;</code> with a generated key.
+            </small>
+            <small t-if="guide.code" class="text-muted d-block mt-1">
+                Keep the <code>ODOO_DB</code> line: on Odoo.sh and hardened instances the bridge cannot auto-detect the database.
+            </small>
+            <small t-if="guide.note" class="text-muted d-block mt-2 fst-italic" t-esc="guide.note"/>
+        </div>
+    </t>
+
+</templates>

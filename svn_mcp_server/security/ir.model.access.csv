@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mcp_enabled_model_admin,scp.model.access admin,model_scp_model_access,svn_mcp_server.group_mcp_admin,1,1,1,1
+access_mcp_enabled_model_user,scp.model.access user,model_scp_model_access,svn_mcp_server.group_mcp_user,1,0,0,0
+access_res_config_settings_mcp_admin,res.config.settings mcp admin,base.model_res_config_settings,svn_mcp_server.group_mcp_admin,1,1,1,0
+access_ir_model_mcp_admin,ir.model mcp admin,base.model_ir_model,svn_mcp_server.group_mcp_admin,1,0,0,0
+access_ir_model_mcp_user,ir.model mcp user,base.model_ir_model,svn_mcp_server.group_mcp_user,1,0,0,0
+access_mcp_model_selection_wizard_admin,scp.model.wizard admin,model_scp_model_wizard,svn_mcp_server.group_mcp_admin,1,1,1,1
+access_res_users_apikeys_mcp_admin,res.users.apikeys mcp admin,base.model_res_users_apikeys,svn_mcp_server.group_mcp_admin,1,1,1,1
+access_res_users_apikeys_mcp_user,res.users.apikeys mcp user,base.model_res_users_apikeys,svn_mcp_server.group_mcp_user,1,0,0,0
+access_mcp_log_admin,scp.log admin,model_scp_log,svn_mcp_server.group_mcp_admin,1,1,1,1
+access_mcp_log_user,scp.log user,model_scp_log,svn_mcp_server.group_mcp_user,1,0,0,0

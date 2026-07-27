@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mcp_res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.mcp</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority">20</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//setting[@id='mail_pluggin_setting']" position="before">
+                <setting id="mcp_enabled_setting" string="MCP Server Access"
+                    help="Enable or disable MCP server access globally. When disabled, all MCP endpoints (REST API and XML-RPC) deny access.">
+                    <field name="mcp_enabled" />
+                    <div class="content-group mt16" invisible="not mcp_enabled">
+                        <button name="%(svn_mcp_server.mcp_model_access_action)d"
+                            icon="oi-arrow-right" type="action"
+                            string="Manage MCP Models" class="btn-link" />
+                    </div>
+                </setting>
+
+                <setting id="mcp_logging_setting" string="MCP Logging"
+                    help="Log all MCP requests and responses for auditing."
+                    invisible="not mcp_enabled">
+                    <field name="mcp_enable_logging" />
+                    <div class="content-group mt16" invisible="not mcp_enable_logging">
+                        <div class="d-flex">
+                            <label for="mcp_log_retention_days" class="o_light_label me-2 mb-0" />
+                            <field name="mcp_log_retention_days" class="oe_inline lh-1" style="width: 80px;" />
+                            <span class="ms-2">days</span>
+                        </div>
+                        <span class="text-muted d-block">Log retention period (0 = keep forever)</span>
+                        <div class="mt8">
+                            <button name="%(svn_mcp_server.mcp_log_action)d"
+                                icon="oi-arrow-right" type="action"
+                                string="View MCP Logs" class="btn-link" />
+                        </div>
+                    </div>
+                </setting>
+
+                <setting id="mcp_rate_limit_setting" string="MCP Rate Limiting"
+                    help="Enforce request limits per user per minute to prevent API abuse."
+                    invisible="not mcp_enabled">
+                    <field name="mcp_enable_rate_limiting" />
+                    <div class="content-group mt16" invisible="not mcp_enable_rate_limiting">
+                        <div class="d-flex align-items-center">
+                            <label for="mcp_request_limit" class="o_light_label me-2 mb-0" />
+                            <field name="mcp_request_limit" class="oe_inline" style="width: 80px;" />
+                            <span class="ms-2">requests/minute</span>
+                        </div>
+                        <span class="text-muted d-block">Maximum requests per user (0 = unlimited)</span>
+                        <div class="d-flex align-items-center mt8">
+                            <label for="mcp_request_timeout" class="o_light_label me-2 mb-0" />
+                            <field name="mcp_request_timeout" class="oe_inline" style="width: 80px;" />
+                            <span class="ms-2">seconds</span>
+                        </div>
+                        <span class="text-muted d-block">Request timeout warning threshold</span>
+                    </div>
+                    <div class="content-group mt16">
+                        <div class="d-flex align-items-center">
+                            <label for="mcp_max_records" class="o_light_label me-2 mb-0" />
+                            <field name="mcp_max_records" class="oe_inline" style="width: 80px;" />
+                            <span class="ms-2">rows / search call</span>
+                        </div>
+                        <span class="text-muted d-block">Per-call page ceiling, not a result cap (0 = unlimited). Paginate for more; use aggregation for totals.</span>
+                    </div>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>

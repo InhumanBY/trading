@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>MCP Server for Odoo | Connect Claude &amp; Any AI Client, Safely</title>
+    <meta name="description" content="MCP Server: Easy Connect brings any Model Context Protocol AI client (Claude, Cursor, VS Code) into Odoo with a guided Setup Assistant and scoped, per-model access.">
+</head>
+
+<body>
+    <main class="rounded border p-4 mt-2" style="color:#364050; font-size:16px; font-family:'Inter', sans-serif; font-weight: 400; line-height:1.6;">
+        <!-- Header Section -->
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-4">
+            <div class="d-flex align-items-center gap-3">
+                <img class="border rounded-1 p-1" src="icon.png" width="61" height="61" alt="Sveltware">
+                <div>
+                    <div class="fw-bold" style="color:#d23f57;line-height:1;font-size: 33px;">MCP Server</div>
+                    <div class="small" style="color:#7891ac">Easy Connect &middot; Bring AI clients into Odoo</div>
+                </div>
+            </div>
+            <div class="text-sm-end">
+                <a href="mailto:odoo@sveltware.com" class="text-decoration-none d-inline-block rounded-pill px-4 py-2" style="background-color:#d23f57;color:#ffffff;font-weight:600;font-size:14px;">Contact Us</a>
+                <div class="small mt-2" style="color:#7891ac;">odoo@sveltware.com</div>
+            </div>
+        </div>
+
+        <!-- Hero Section -->
+        <div class="mb-5" style="color:#364050">
+            <div class="row g-4 align-items-center">
+                <div class="col-12">
+                    <div class="ms-1 my-3" style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#7891ac;font-weight:700;">By Sveltware Solutions</div>
+                    <p class="h1 mb-4 pb-3" style="font-size: 37px;line-height:1.1;color: #1b2436;font-weight:700;">Let Claude talk to Odoo. On your terms.</p>
+                    <p class="mb-4" style="font-size:18px;line-height:1.6;color:#364050;">MCP Server exposes your Odoo over the Model Context Protocol so AI assistants like Claude, Cursor and VS Code can read and act on your data through natural language. A built-in Setup Assistant diagnoses every step and generates copy-ready config for each client, while a per-model permission matrix keeps the AI scoped to exactly what you allow, with an audit log for everything it touches.</p>
+
+                    <!-- Stats Grid -->
+                    <div class="row g-3 pt-1">
+                        <div class="col-12 col-md-4">
+                            <img src="icon/ic-lightning-g.svg" width="48" height="48" class="d-block mb-2" alt="">
+                            <div style="font-size:12px;color:#667085;text-transform:uppercase;letter-spacing:0.08em;font-weight:700;">Compatibility</div>
+                            <div style="font-size:18px;font-weight:600;line-height:1.3;">Any MCP Client</div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <img src="icon/ic-sliders-horizontal-g.svg" width="48" height="48" class="d-block mb-2" alt="">
+                            <div style="font-size:12px;color:#667085;text-transform:uppercase;letter-spacing:0.08em;font-weight:700;">Onboarding</div>
+                            <div style="font-size:18px;font-weight:600;line-height:1.3;">Guided Setup Assistant</div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <img src="icon/ic-database-g.svg" width="48" height="48" class="d-block mb-2" alt="">
+                            <div style="font-size:12px;color:#667085;text-transform:uppercase;letter-spacing:0.08em;font-weight:700;">License</div>
+                            <div style="font-size:18px;font-weight:600;line-height:1.3;">Free &middot; Open Source</div>
+                        </div>
+                    </div>
+
+                    <!-- Free &amp; Open Source callout -->
+                    <div class="d-flex flex-column flex-md-row align-items-md-center gap-2 gap-md-4 rounded-2 mt-4 p-4" style="background-color:#fff5f6;border:1px solid #f5d0d6;">
+                        <div style="min-width:fit-content;">
+                            <div style="font-size:12px;color:#d23f57;text-transform:uppercase;letter-spacing:0.12em;font-weight:700;">Free &amp; Open Source</div>
+                            <div style="color:#8a4a55;font-size:13px;">LGPL-3, full source included</div>
+                        </div>
+                        <div class="flex-grow-1 rounded px-3 py-2 bg-white" style="border:1px dashed #e3a5af;">
+                            <span style="font-size:15px;font-weight:600;color:#1b2436;">No purchase, no per-seat fee, no user cap. Install it, expose the models you choose, and connect your AI client.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screenshots carousel -->
+        <div id="mcp_carousel" class="carousel slide border rounded-2 position-sticky mb-5 overflow-hidden" data-bs-ride="carousel" data-bs-interval="4000">
+            <div class="carousel-inner">
+                <div class="carousel-item active" style="min-height: 0px;">
+                    <img src="img/mcp_settings.avif" class="d-block w-100 rounded-2" alt="MCP settings in Odoo Integrations with per-model access, logging and rate limits">
+                    <div class="carousel-caption d-none d-md-flex justify-content-center">
+                        <h4 class="bg-800 mb-0">Scoped &amp; audited &middot; Enable MCP per model, with logging and rate limits</h4>
+                    </div>
+                </div>
+                <div class="carousel-item" style="min-height: 0px;">
+                    <img src="img/setup_diagnostics.avif" class="d-block w-100 rounded-2" alt="Setup Assistant live-testing every endpoint in the MCP chain">
+                    <div class="carousel-caption d-none d-md-flex justify-content-center">
+                        <h4 class="bg-800 mb-0">Diagnostics &middot; Every link in the chain, live-tested before you connect</h4>
+                    </div>
+                </div>
+                <div class="carousel-item" style="min-height: 0px;">
+                    <img src="img/setup_assistant.avif" class="d-block w-100 rounded-2" alt="MCP Setup Assistant showing a connected instance and the client picker">
+                    <div class="carousel-caption d-none d-md-flex justify-content-center">
+                        <h4 class="bg-800 mb-0">Setup Assistant &middot; One screen to diagnose, then connect any client</h4>
+                    </div>
+                </div>
+                <div class="carousel-item" style="min-height: 0px;">
+                    <img src="img/client_config.avif" class="d-block w-100 rounded-2" alt="Copy-ready MCP configuration generated for a specific AI client">
+                    <div class="carousel-caption d-none d-md-flex justify-content-center">
+                        <h4 class="bg-800 mb-0">Per-client config &middot; Copy-ready setup for Claude, Cursor, VS Code and more</h4>
+                    </div>
+                </div>
+                <div class="carousel-item" style="min-height: 0px;">
+                    <img src="img/claude_connected.avif" class="d-block w-100 rounded-2" alt="The Odoo connector in Claude with per-tool read and write permissions">
+                    <div class="carousel-caption d-none d-md-flex justify-content-center">
+                        <h4 class="bg-800 mb-0">Connect once &middot; Claude, scoped to the tools you allow</h4>
+                    </div>
+                </div>
+                <div class="carousel-item" style="min-height: 0px;">
+                    <img src="img/claude_query.avif" class="d-block w-100 rounded-2" alt="Claude reading live Odoo records to build its answer">
+                    <div class="carousel-caption d-none d-md-flex justify-content-center">
+                        <h4 class="bg-800 mb-0">Live queries &middot; Claude pulls the exact records it needs, on demand</h4>
+                    </div>
+                </div>
+                <div class="carousel-item" style="min-height: 0px;">
+                    <img src="img/claude_answer.avif" class="d-block w-100 rounded-2" alt="Claude answering a question with real contact data read from Odoo">
+                    <div class="carousel-caption d-none d-md-flex justify-content-center">
+                        <h4 class="bg-800 mb-0">Ask in plain language &middot; Claude answers straight from your Odoo</h4>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#mcp_carousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" style="background-color:black; border-radius:0.625rem; padding:15px"></span>
+            </a>
+            <a class="carousel-control-next" href="#mcp_carousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" style="background-color:black; border-radius:0.625rem; padding:15px"></span>
+            </a>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="pt-5 border-top">
+            <!-- Tabs Navigation -->
+            <ul class="nav nav-pills rounded border bg-200" id="mcp-tab" role="tablist" style="width: fit-content;">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link border-0 rounded-end-0 active" id="tab-overview" data-bs-toggle="tab" href="#pane-overview" role="tab" aria-controls="pane-overview" aria-selected="true" style="padding:9px 14px;color:#d23f57;font-weight:600;">How It Works</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link border-0 rounded-0" id="tab-faq" data-bs-toggle="tab" href="#pane-faq" role="tab" aria-controls="pane-faq" aria-selected="false" style="padding:9px 14px;color:#3f5578;font-weight:600;" tabindex="-1">Common Questions</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link border-0 rounded-0" id="tab-about" data-bs-toggle="tab" href="#pane-about" role="tab" aria-controls="pane-about" aria-selected="false" style="padding:9px 14px;color:#3f5578;font-weight:600;" tabindex="-1">Why Sveltware</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link border-0 rounded-start-0" id="tab-apps" data-bs-toggle="tab" href="#pane-apps" role="tab" aria-controls="pane-apps" aria-selected="false" style="padding:9px 14px;color:#3f5578;font-weight:600;" tabindex="-1">You May Also Like</a>
+                </li>
+            </ul>
+
+            <!-- Tabs Panes -->
+            <div id="mcp-tab-content" class="tab-content bg-white border rounded mt-3" style="padding: 32px;">
+                <!-- Overview Pane -->
+                <div class="tab-pane fade show active" id="pane-overview" role="tabpanel" aria-labelledby="tab-overview">
+                    <div class="row g-4 mb-4">
+                        <div class="col-12 col-xl-7">
+                            <div class="position-relative">
+                                <p class="fw-bolder mb-3" style="font-size:1.5rem; color:#1b2436;">
+                                    # An MCP endpoint for Odoo, without the guesswork
+                                </p>
+                                <span style="height:1.5px; display:block; background-color:#d23f57; width:70px; border-radius:6px" class="mb-4"></span>
+                            </div>
+                            <p class="mb-3" style="color:#364050; font-size:16px; line-height:1.6;">The Model Context Protocol is how modern AI assistants talk to external tools and data. This module turns your Odoo into an MCP-reachable source, so an assistant can search records, read details and run allowed operations in plain language.</p>
+                            <p class="mb-4" style="color:#364050; font-size:16px; line-height:1.6;">Where most setups leave you stitching together API keys, client config files and permission checks by hand, MCP Server ships a <strong>Setup Assistant</strong>: it live-tests every link in the chain, tells you exactly what is missing, generates copy-ready config for your specific client, and lets you mint a scoped API key without leaving the page.</p>
+                            <div class="d-flex flex-wrap gap-2">
+                                <span class="badge rounded-pill" style="background-color:#fff5f6 !important; color:#d23f57 !important; font-weight:600; padding:8px 12px">Guided Setup</span>
+                                <span class="badge rounded-pill" style="background-color:#fff5f6 !important; color:#d23f57 !important; font-weight:600; padding:8px 12px">Scoped Access</span>
+                                <span class="badge rounded-pill" style="background-color:#fff5f6 !important; color:#d23f57 !important; font-weight:600; padding:8px 12px">Any MCP Client</span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-xl-5 text-center">
+                            <div class="h-100 rounded-1 border p-4 d-flex flex-column justify-content-center align-items-center" style="background-color: #f2f5f8; border-color: #d4d8e4 !important; min-height: 180px;">
+                                <div style="font-weight: 700; color: #1b2436; font-size: 16px;" class="mb-2">The Setup Assistant</div>
+                                <div style="color: #364050; font-size: 14px; max-width: 250px; line-height:1.5;">Diagnostics, a live connection test, per-client config and one-click API keys, all on a single screen inside Odoo.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Access model that is safe by design -->
+                    <div class="rounded-1 border p-4 mt-2 mb-5" style="background-color:#f2f5f8; border-color: #d4d8e4 !important;">
+                        <div class="mb-3" style="font-size:12px;color:#7891ac;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;">An access model that stays in your control</div>
+                        <div class="row g-4">
+                            <div class="col-12 col-md-4">
+                                <div class="fw-bold mb-2" style="color:#1b2436; font-size:16px;">01 &middot; Off by default</div>
+                                <div style="color:#364050;font-size:15px;line-height:1.6;">A global switch keeps every endpoint closed until you turn MCP on. Nothing is reachable by accident.</div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="fw-bold mb-2" style="color:#1b2436; font-size:16px;">02 &middot; Per-model, per-operation</div>
+                                <div style="color:#364050;font-size:15px;line-height:1.6;">Expose only the models you pick, and for each one allow read, create, update and delete independently. The AI never sees the rest.</div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="fw-bold mb-2" style="color:#1b2436; font-size:16px;">03 &middot; Audited and bounded</div>
+                                <div style="color:#364050;font-size:15px;line-height:1.6;">Every call is logged with model, operation, user and IP, protected by API-key auth and per-minute rate limits.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Key Features Section -->
+                    <div class="pt-5 mt-2 border-top">
+                        <div class="position-relative">
+                            <p class="fw-bolder mb-3" style="font-size:1.5rem; color:#1b2436;">
+                                # Key Features &amp; Capabilities
+                            </p>
+                            <span style="height:1.5px; display:block; background-color:#d23f57; width:70px; border-radius:6px" class="mb-4"></span>
+                        </div>
+                        <div class="row g-4 mb-5">
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="h-100 rounded-1 border p-4 bg-white" style="border-color: #d4d8e4 !important;">
+                                    <img src="icon/ic-compass-r.svg" width="32" height="32" class="d-block mb-3" alt="">
+                                    <div class="fw-bold mb-2" style="color:var(--gray-dark); font-size:18px;">Setup Assistant</div>
+                                    <div style="color:var(--gray-dark);font-size:15px;line-height:1.6;">A single screen that diagnoses each step, live-tests the endpoints from your browser, and generates the exact config for Claude Desktop, Claude Code, VS Code and more.</div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="h-100 rounded-1 border p-4 bg-white" style="border-color: #d4d8e4 !important;">
+                                    <img src="icon/ic-funnel-r.svg" width="32" height="32" class="d-block mb-3" alt="">
+                                    <div class="fw-bold mb-2" style="color:var(--gray-dark); font-size:18px;">Per-Model Permissions</div>
+                                    <div style="color:var(--gray-dark);font-size:15px;line-height:1.6;">A permission matrix where you enable models one by one and toggle read, create, update and delete for each. Access is a whitelist, never all-or-nothing.</div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="h-100 rounded-1 border p-4 bg-white" style="border-color: #d4d8e4 !important;">
+                                    <img src="icon/ic-stack-r.svg" width="32" height="32" class="d-block mb-3" alt="">
+                                    <div class="fw-bold mb-2" style="color:var(--gray-dark); font-size:18px;">Any MCP Client</div>
+                                    <div style="color:var(--gray-dark);font-size:15px;line-height:1.6;">Works with Claude web, desktop and mobile, Claude Code, Cursor, VS Code and any Model Context Protocol client, over stdio or streamable HTTP.</div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="h-100 rounded-1 border p-4 bg-white" style="border-color: #d4d8e4 !important;">
+                                    <img src="icon/ic-gauge-r.svg" width="32" height="32" class="d-block mb-3" alt="">
+                                    <div class="fw-bold mb-2" style="color:var(--gray-dark); font-size:18px;">Keys &amp; Rate Limits</div>
+                                    <div style="color:var(--gray-dark);font-size:15px;line-height:1.6;">Authentication uses standard Odoo API keys, scoped to a user. Configurable per-minute rate limits keep any client from overwhelming the server.</div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="h-100 rounded-1 border p-4 bg-white" style="border-color: #d4d8e4 !important;">
+                                    <img src="icon/ic-magnifying-glass-r.svg" width="32" height="32" class="d-block mb-3" alt="">
+                                    <div class="fw-bold mb-2" style="color:var(--gray-dark); font-size:18px;">Full Audit Log</div>
+                                    <div style="color:var(--gray-dark);font-size:15px;line-height:1.6;">Every request is recorded with the model, operation, user, endpoint and IP address, so you always know what the AI accessed and when.</div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="h-100 rounded-1 border p-4 bg-white" style="border-color: #d4d8e4 !important;">
+                                    <img src="icon/ic-sparkle-r.svg" width="32" height="32" class="d-block mb-3" alt="">
+                                    <div class="fw-bold mb-2" style="color:var(--gray-dark); font-size:18px;">Safe by Default</div>
+                                    <div style="color:var(--gray-dark);font-size:15px;line-height:1.6;">Only mapped operations are allowed, private methods are blocked, an optional read-size ceiling protects your context, and uninstall leaves your database clean.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Talk to Odoo like this -->
+                    <div class="pt-5 mt-2 border-top">
+                        <div class="position-relative">
+                            <p class="fw-bolder mb-3" style="font-size:1.5rem; color:#1b2436;"># Talk to Odoo like this</p>
+                            <span style="height:1.5px; display:block; background-color:#d23f57; width:70px; border-radius:6px" class="mb-4"></span>
+                        </div>
+                        <p class="mb-4" style="color:#364050; font-size:16px; line-height:1.6;">No query builder, no domain syntax. Your team asks in plain language and the model turns it into the right Odoo call, within the models and operations you allowed.</p>
+                        <div class="row g-3">
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <div class="h-100 rounded-1 border bg-white p-3" style="border-color:#d4d8e4 !important;">
+                                    <div class="mb-2" style="font-size:11px;color:#d23f57;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;">Ask</div>
+                                    <div style="color:#364050;font-size:13.5px;line-height:1.5;">
+                                        <div class="py-1">Which customers in Germany have no orders this year?</div>
+                                        <div style="height:1px;background-color:#eef1f5;"></div>
+                                        <div class="py-1">Show contacts tagged VIP that have no email.</div>
+                                        <div style="height:1px;background-color:#eef1f5;"></div>
+                                        <div class="py-1">What products are below their reorder point?</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <div class="h-100 rounded-1 border bg-white p-3" style="border-color:#d4d8e4 !important;">
+                                    <div class="mb-2" style="font-size:11px;color:#d23f57;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;">Report</div>
+                                    <div style="color:#364050;font-size:13.5px;line-height:1.5;">
+                                        <div class="py-1">Total sales by salesperson this quarter.</div>
+                                        <div style="height:1px;background-color:#eef1f5;"></div>
+                                        <div class="py-1">Count open opportunities per stage.</div>
+                                        <div style="height:1px;background-color:#eef1f5;"></div>
+                                        <div class="py-1">Group overdue invoices by customer.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <div class="h-100 rounded-1 border bg-white p-3" style="border-color:#d4d8e4 !important;">
+                                    <div class="mb-2" style="font-size:11px;color:#d23f57;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;">Create</div>
+                                    <div style="color:#364050;font-size:13.5px;line-height:1.5;">
+                                        <div class="py-1">Add a contact for Meridian Labs in Berlin.</div>
+                                        <div style="height:1px;background-color:#eef1f5;"></div>
+                                        <div class="py-1">Create a product 'Trailhead Jacket' at 79 EUR.</div>
+                                        <div style="height:1px;background-color:#eef1f5;"></div>
+                                        <div class="py-1">Log a call activity on this lead for Friday.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <div class="h-100 rounded-1 border bg-white p-3" style="border-color:#d4d8e4 !important;">
+                                    <div class="mb-2" style="font-size:11px;color:#d23f57;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;">Update</div>
+                                    <div style="color:#364050;font-size:13.5px;line-height:1.5;">
+                                        <div class="py-1">Set this order's delivery date to next Monday.</div>
+                                        <div style="height:1px;background-color:#eef1f5;"></div>
+                                        <div class="py-1">Change the vendor on PO 00042 to Northwind.</div>
+                                        <div style="height:1px;background-color:#eef1f5;"></div>
+                                        <div class="py-1">Mark these three tasks as done.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mt-3 mb-5" style="color:#7891ac; font-size:13px;">Totals and counts run server-side as aggregations, so a report over a million rows comes back as one number, never a million records dumped into the chat.</p>
+                    </div>
+
+                    <!-- Built for real roles -->
+                    <div class="pt-5 mt-2 border-top">
+                        <div class="position-relative">
+                            <p class="fw-bolder mb-3" style="font-size:1.5rem; color:#1b2436;"># Built for the people who live in Odoo</p>
+                            <span style="height:1.5px; display:block; background-color:#d23f57; width:70px; border-radius:6px" class="mb-4"></span>
+                        </div>
+                        <div class="row g-4">
+                            <div class="col-12 col-lg-4">
+                                <div class="h-100 rounded-1 border p-4" style="background-color:#f2f5f8; border-color:#d4d8e4 !important;">
+                                    <div class="fw-bold mb-2" style="color:#1b2436; font-size:17px;">Sales ops</div>
+                                    <div class="mb-3" style="color:#364050;font-size:14px;line-height:1.55;">A rep on a call asks "which of my deals stalled 14+ days?", then "add a follow-up on the Meridian deal for tomorrow", without leaving the conversation.</div>
+                                    <div style="color:#d23f57;font-weight:600;font-size:13px;">Less data entry, a cleaner pipeline as a side effect.</div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-4">
+                                <div class="h-100 rounded-1 border p-4" style="background-color:#f2f5f8; border-color:#d4d8e4 !important;">
+                                    <div class="fw-bold mb-2" style="color:#1b2436; font-size:17px;">Support</div>
+                                    <div class="mb-3" style="color:#364050;font-size:14px;line-height:1.55;">An agent mid-ticket asks "pull the last five orders for this customer", then "log a note with the resolution", and stays in one place instead of five screens.</div>
+                                    <div style="color:#d23f57;font-weight:600;font-size:13px;">Answers in seconds, no screen-hopping.</div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-4">
+                                <div class="h-100 rounded-1 border p-4" style="background-color:#f2f5f8; border-color:#d4d8e4 !important;">
+                                    <div class="fw-bold mb-2" style="color:#1b2436; font-size:17px;">Finance</div>
+                                    <div class="mb-3" style="color:#364050;font-size:14px;line-height:1.55;">At month-end, "group overdue receivables by customer" and "list the credit notes issued this quarter" surface the problems before the close, not after.</div>
+                                    <div style="color:#d23f57;font-weight:600;font-size:13px;">Faster close, issues spotted earlier.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mt-3 mb-5" style="color:#7891ac; font-size:13px;">Each role sees only the models you exposed to them. A support key never reaches the general ledger unless you say so.</p>
+                    </div>
+
+                    <!-- Works with everything -->
+                    <div class="pt-5 mt-2 border-top">
+                        <div class="position-relative">
+                            <p class="fw-bolder mb-3" style="font-size:1.5rem; color:#1b2436;"># One connection, every MCP client</p>
+                            <span style="height:1.5px; display:block; background-color:#d23f57; width:70px; border-radius:6px" class="mb-4"></span>
+                        </div>
+                        <p class="mb-3" style="color:#364050; font-size:16px; line-height:1.6;">The Model Context Protocol is an open standard. You connect Odoo once, and every client that speaks it works, today and the ones that ship next month.</p>
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            <span class="badge rounded-pill" style="background-color:#fff5f6 !important; color:#d23f57 !important; font-weight:600; padding:8px 14px">Claude Desktop</span>
+                            <span class="badge rounded-pill" style="background-color:#fff5f6 !important; color:#d23f57 !important; font-weight:600; padding:8px 14px">Claude Code</span>
+                            <span class="badge rounded-pill" style="background-color:#fff5f6 !important; color:#d23f57 !important; font-weight:600; padding:8px 14px">Claude web &amp; mobile</span>
+                            <span class="badge rounded-pill" style="background-color:#fff5f6 !important; color:#d23f57 !important; font-weight:600; padding:8px 14px">Cursor</span>
+                            <span class="badge rounded-pill" style="background-color:#fff5f6 !important; color:#d23f57 !important; font-weight:600; padding:8px 14px">VS Code</span>
+                            <span class="badge rounded-pill" style="background-color:#fff5f6 !important; color:#d23f57 !important; font-weight:600; padding:8px 14px">Cline</span>
+                            <span class="badge rounded-pill" style="background-color:#fff5f6 !important; color:#d23f57 !important; font-weight:600; padding:8px 14px">Zed</span>
+                            <span class="badge rounded-pill" style="background-color:#f2f5f8 !important; color:#7891ac !important; font-weight:600; padding:8px 14px">+ any MCP client</span>
+                        </div>
+                        <p class="mb-0" style="color:#7891ac; font-size:13px;">Switch AI providers whenever you like. The connection to Odoo stays the same, so there is no lock-in to unwind later.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Pane -->
+                <div class="tab-pane fade" id="pane-faq" role="tabpanel" aria-labelledby="tab-faq">
+                    <div class="accordion-wrapper">
+                        <div class="accordion accordion-flush" id="accordionMcpFAQ">
+                            <!-- Q-Free -->
+                            <div class="accordion-item" style="background-color:transparent">
+                                <p class="accordion-header" id="faqFreeHead">
+                                    <a href="#faqFree" class="accordion-button text-decoration-none px-0 pt-0 shadow-none" data-bs-toggle="collapse" data-bs-target="#faqFree" aria-expanded="true" aria-controls="faqFree"
+                                        style="background-color:transparent; font-weight:700; font-size:18px; color:#1b2436">
+                                        Is it really free?
+                                    </a>
+                                </p>
+                                <div id="faqFree" class="accordion-collapse collapse show" aria-labelledby="faqFreeHead" data-bs-parent="#accordionMcpFAQ">
+                                    <div class="accordion-body pt-0 px-0" style="color:#364050; font-size:15px; line-height:1.6;">
+                                        Yes. MCP Server is released under <strong>LGPL-3</strong> with the full source included, at no cost. There is no per-seat fee, no user cap and no paid tier to unlock features. You are free to run it, study it and adapt it within the terms of the license.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Q-Clients -->
+                            <div class="accordion-item" style="background-color:transparent">
+                                <p class="accordion-header" id="faqClientsHead">
+                                    <a href="#faqClients" class="accordion-button collapsed text-decoration-none px-0 shadow-none" data-bs-toggle="collapse" data-bs-target="#faqClients" aria-expanded="false" aria-controls="faqClients"
+                                        style="background-color:transparent; font-weight:700; font-size:18px; color:#1b2436">
+                                        Which AI clients does it work with?
+                                    </a>
+                                </p>
+                                <div id="faqClients" class="accordion-collapse collapse" aria-labelledby="faqClientsHead" data-bs-parent="#accordionMcpFAQ">
+                                    <div class="accordion-body pt-0 px-0" style="color:#364050; font-size:15px; line-height:1.6;">
+                                        Any client that speaks the Model Context Protocol: <strong>Claude</strong> (web, desktop, mobile and Claude Code), <strong>Cursor</strong>, <strong>VS Code</strong> and others. The Setup Assistant generates the right configuration for each one, whether it connects over a local stdio bridge or a streamable HTTP endpoint.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Q-Env -->
+                            <div class="accordion-item" style="background-color:transparent">
+                                <p class="accordion-header" id="faqEnvHead">
+                                    <a href="#faqEnv" class="accordion-button collapsed text-decoration-none px-0 shadow-none" data-bs-toggle="collapse" data-bs-target="#faqEnv" aria-expanded="false" aria-controls="faqEnv"
+                                        style="background-color:transparent; font-weight:700; font-size:18px; color:#1b2436">
+                                        Which environments can I install it on?
+                                    </a>
+                                </p>
+                                <div id="faqEnv" class="accordion-collapse collapse" aria-labelledby="faqEnvHead" data-bs-parent="#accordionMcpFAQ">
+                                    <div class="accordion-body pt-0 px-0" style="color:#364050; font-size:15px; line-height:1.6;">
+                                        Any Odoo that lets you install custom modules: <strong>Odoo.sh</strong>, self-hosted and on-premise servers, and local instances. <strong>Odoo Online (SaaS)</strong> does not allow custom modules, so the addon cannot be installed there, but the Setup Assistant still shows a direct-connection path for SaaS that talks to the standard API, with a clear note on its wider access.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Q-Security -->
+                            <div class="accordion-item" style="background-color:transparent">
+                                <p class="accordion-header" id="faqSecHead">
+                                    <a href="#faqSec" class="accordion-button collapsed text-decoration-none px-0 shadow-none" data-bs-toggle="collapse" data-bs-target="#faqSec" aria-expanded="false" aria-controls="faqSec"
+                                        style="background-color:transparent; font-weight:700; font-size:18px; color:#1b2436">
+                                        What can the AI actually access?
+                                    </a>
+                                </p>
+                                <div id="faqSec" class="accordion-collapse collapse" aria-labelledby="faqSecHead" data-bs-parent="#accordionMcpFAQ">
+                                    <div class="accordion-body pt-0 px-0" style="color:#364050; font-size:15px; line-height:1.6;">
+                                        Only what you allow. Access is a <strong>whitelist</strong>: a model is reachable only after you enable it, and each operation (read, create, update, delete) is toggled on its own. On top of that, requests run under a scoped API key with the user's own Odoo access rights, private methods are blocked, and every call is written to the audit log.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Q-Data -->
+                            <div class="accordion-item" style="background-color:transparent">
+                                <p class="accordion-header" id="faqDataHead">
+                                    <a href="#faqData" class="accordion-button collapsed text-decoration-none px-0 shadow-none" data-bs-toggle="collapse" data-bs-target="#faqData" aria-expanded="false" aria-controls="faqData"
+                                        style="background-color:transparent; font-weight:700; font-size:18px; color:#1b2436">
+                                        Does it modify my data or Odoo's standard views?
+                                    </a>
+                                </p>
+                                <div id="faqData" class="accordion-collapse collapse" aria-labelledby="faqDataHead" data-bs-parent="#accordionMcpFAQ">
+                                    <div class="accordion-body pt-0 px-0" style="color:#364050; font-size:15px; line-height:1.6;">
+                                        No. The addon adds its own configuration models and a settings section, and never rewrites your business data or standard screens. Any change an AI makes goes through the operations you explicitly allowed. Uninstalling removes what the module added and nothing else.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Q-Bridge -->
+                            <div class="accordion-item" style="background-color:transparent">
+                                <p class="accordion-header" id="faqBridgeHead">
+                                    <a href="#faqBridge" class="accordion-button collapsed text-decoration-none px-0 shadow-none" data-bs-toggle="collapse" data-bs-target="#faqBridge" aria-expanded="false" aria-controls="faqBridge"
+                                        style="background-color:transparent; font-weight:700; font-size:18px; color:#1b2436">
+                                        Do I need anything besides the addon?
+                                    </a>
+                                </p>
+                                <div id="faqBridge" class="accordion-collapse collapse" aria-labelledby="faqBridgeHead" data-bs-parent="#accordionMcpFAQ">
+                                    <div class="accordion-body pt-0 px-0" style="color:#364050; font-size:15px; line-height:1.6;">
+                                        The addon exposes the Odoo side. Your AI client connects through the open-source <strong>mcp-server-odoo</strong> bridge, run locally for desktop clients or as a streamable HTTP endpoint for web and remote ones. The Setup Assistant writes the exact command and config for you, so there is nothing to figure out by hand.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- About Us Pane -->
+                <div class="tab-pane fade" id="pane-about" role="tabpanel" aria-labelledby="tab-about">
+                    <!-- Profile Section -->
+                    <div class="row g-4 mb-5">
+                        <div class="col-12 col-xl-7">
+                            <div class="position-relative">
+                                <p class="fw-bolder mb-3" style="font-size:1.5rem; color:#1b2436;">
+                                    # Who We Are
+                                </p>
+                                <span style="height:1.5px; display:block; background-color:#3769b9; width:70px; border-radius:6px" class="mb-4"></span>
+                            </div>
+                            <p class="mb-3" style="color:#364050; font-size:16px; line-height:1.6;"><strong>Sveltware Solutions</strong> is a small studio building premium extensions for the Odoo backend. We work <strong>close to the metal</strong>, its OwlJS layer, rendering pipeline, and extension points, so we can change how Odoo feels without touching what keeps it stable: we build on the framework's own hooks, <strong>never override its internals</strong>.</p>
+                            <p class="mb-3" style="color:#364050; font-size:16px; line-height:1.6;">Not one add-on but a <strong>connected ecosystem</strong>, themes, list and kanban tools, faceted search, printing, activity, and AI, under one design language. Every module is <strong>plug-and-play</strong>: zero config, no schema changes, clean uninstall, and proven on <strong>production-scale data</strong>.</p>
+                            <p class="mb-4" style="color:#364050; font-size:16px; line-height:1.6;">It is built to be looked at, too: Apple-grade spacing, a <strong>flat-premium finish</strong>, strict WCAG 2.2. Our standard is <strong>effectiveness first</strong>, every module earns its place by making real work faster, and so does our support: <strong>you write to the engineers who built it</strong>, not a ticket queue.</p>
+                        </div>
+                        <div class="col-12 col-xl-5 text-center">
+                            <div class="h-100 rounded-1 border p-4 d-flex flex-column justify-content-center align-items-center" style="background-color: #f2f5f8; border-color: #d4d8e4 !important; min-height: 180px;">
+                                <img src="//apps.odoocdn.com/apps/assets/19.0/omux_shared_lib/svelt.png" width="60" height="60" alt="Sveltware Logo" class="mb-3 border rounded-1 p-1 bg-white">
+                                <div style="font-weight: 700; color: #1b2436; font-size: 16px;" class="mb-1">Sveltware Solutions</div>
+                                <div style="color: #364050; font-size: 13px; max-width: 250px; line-height: 1.4;">Crafting pixel-perfect, zero-configuration enhancements for Odoo environments.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Standards Section -->
+                    <div class="pt-4 border-top">
+                        <div class="position-relative">
+                            <p class="fw-bolder mb-3" style="font-size:1.5rem; color:#1b2436;">
+                                # How We Build
+                            </p>
+                            <span style="height:1.5px; display:block; background-color:#3769b9; width:70px; border-radius:6px" class="mb-4"></span>
+                        </div>
+                        <p class="mb-4" style="color:#7891ac; font-size:15px;">Six standards every Sveltware module must pass before it ships:</p>
+
+                        <div class="row g-4">
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="h-100 rounded-1 border p-4 bg-white" style="border-color: #d4d8e4 !important;">
+                                    <div class="mb-2" style="font-size:11px;color:#7891ac;text-transform:uppercase;letter-spacing:0.08em;font-weight:700;">01 &middot; Architecture</div>
+                                    <div class="fw-bold mb-2" style="color:#3769b9; font-size:17px;">Extend, Never Override</div>
+                                    <div style="color:#364050;font-size:15px;line-height:1.6;">We hook into Odoo's official extension points instead of monkey-patching internals. Standard views, workflows, and other modules keep working exactly as before.</div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="h-100 rounded-1 border p-4 bg-white" style="border-color: #d4d8e4 !important;">
+                                    <div class="mb-2" style="font-size:11px;color:#7891ac;text-transform:uppercase;letter-spacing:0.08em;font-weight:700;">02 &middot; Data Safety</div>
+                                    <div class="fw-bold mb-2" style="color:#3769b9; font-size:17px;">Fully Reversible</div>
+                                    <div style="color:#364050;font-size:15px;line-height:1.6;">No schema rewrites, no data migration, no leftovers. Removing one of our modules returns your database to exactly the state it was in before.</div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="h-100 rounded-1 border p-4 bg-white" style="border-color: #d4d8e4 !important;">
+                                    <div class="mb-2" style="font-size:11px;color:#7891ac;text-transform:uppercase;letter-spacing:0.08em;font-weight:700;">03 &middot; Onboarding</div>
+                                    <div class="fw-bold mb-2" style="color:#3769b9; font-size:17px;">Zero Configuration</div>
+                                    <div style="color:#364050;font-size:15px;line-height:1.6;">Install and use. Our modules read your existing setup, attributes, views, and access rights, instead of asking you to rebuild it in a settings screen.</div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="h-100 rounded-1 border p-4 bg-white" style="border-color: #d4d8e4 !important;">
+                                    <div class="mb-2" style="font-size:11px;color:#7891ac;text-transform:uppercase;letter-spacing:0.08em;font-weight:700;">04 &middot; Performance</div>
+                                    <div class="fw-bold mb-2" style="color:#3769b9; font-size:17px;">Fast on Real Data</div>
+                                    <div style="color:#364050;font-size:15px;line-height:1.6;">We test against large, production-shaped databases, not demo data. Indexed domains, client-side caching, and lazy loading are the default, not an afterthought.</div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="h-100 rounded-1 border p-4 bg-white" style="border-color: #d4d8e4 !important;">
+                                    <div class="mb-2" style="font-size:11px;color:#7891ac;text-transform:uppercase;letter-spacing:0.08em;font-weight:700;">05 &middot; Design</div>
+                                    <div class="fw-bold mb-2" style="color:#3769b9; font-size:17px;">Native and Accessible</div>
+                                    <div style="color:#364050;font-size:15px;line-height:1.6;">Every interface follows Odoo's native design language and meets WCAG 2.2: full keyboard support, real focus states, and contrast that holds up in light and dark mode.</div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="h-100 rounded-1 border p-4 bg-white" style="border-color: #d4d8e4 !important;">
+                                    <div class="mb-2" style="font-size:11px;color:#7891ac;text-transform:uppercase;letter-spacing:0.08em;font-weight:700;">06 &middot; Longevity</div>
+                                    <div class="fw-bold mb-2" style="color:#3769b9; font-size:17px;">Maintained Across Versions</div>
+                                    <div style="color:#364050;font-size:15px;line-height:1.6;">We track Odoo's release cycle and update our suite for each major version, so upgrading Odoo never means abandoning the tools your team relies on.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Our Apps Pane -->
+                <div class="tab-pane fade" id="pane-apps" role="tabpanel" aria-labelledby="tab-apps">
+                    <div class="position-relative">
+                        <p class="fw-bolder mb-3" style="font-size:1.5rem; color:#1b2436;">
+                            # The Sveltware App Suite
+                        </p>
+                        <span style="height:1.5px; display:block; background-color:#d23f57; width:70px; border-radius:6px" class="mb-4"></span>
+                    </div>
+                    <p class="mb-4" style="color:#7891ac; font-size:15px;">One family of modules, designed to work seamlessly together. Click any app to open it on the Odoo Apps store in a new tab.</p>
+
+                    <!-- Featured: backend themes -->
+                    <div class="rounded-1 border p-4 mb-4" style="background-color:#fff5f6; border-color:#f5d0d6 !important;">
+                        <div class="row g-4 align-items-center">
+                            <div class="col-12 col-lg-7">
+                                <div class="mb-2" style="font-size:11px;color:#d23f57;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;">Flagship &middot; Backend Themes</div>
+                                <div class="fw-bold mb-2" style="color:#1b2436; font-size:20px;">Omux &amp; Lavend &middot; Backend with Agentic AI</div>
+                                <div style="color:#364050;font-size:15px;line-height:1.6;">A complete redesign of the Odoo backend, available as Omux or Lavend, each running on both Community and Enterprise: dual sidebars, custom presets, hybrid start menus, dark/light modes, and WCAG 2.2 compliance, with agentic AI woven in.</div>
+                            </div>
+                            <div class="col-12 col-lg-5">
+                                <div class="d-flex flex-wrap gap-2 justify-content-lg-end">
+                                    <a target="_blank" href="https://apps.odoo.com/apps/themes/19.0/ocoo_om_ux/" class="text-decoration-none badge rounded-pill" style="background-color:#d23f57 !important; color:#ffffff !important; font-weight:600; padding:9px 14px">Omux Backend</a>
+                                    <a target="_blank" href="https://apps.odoo.com/apps/themes/19.0/ocoo_lavend_ux/" class="text-decoration-none badge rounded-pill" style="background-color:#ffffff !important; color:#d23f57 !important; border:1px solid #f5d0d6; font-weight:600; padding:9px 14px">Lavend Backend</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- App grid: every card links to its Odoo Apps listing (target=_blank) -->
+                    <div class="row g-4">
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <a target="_blank" href="https://apps.odoo.com/apps/modules/19.0/udoo_ec_multi_site/" class="text-decoration-none d-block h-100">
+                                <div class="h-100 rounded-1 border bg-white overflow-hidden d-flex flex-column" style="border-color: #d4d8e4 !important;">
+                                    <img src="//apps.odoocdn.com/apps/assets/19.0/udoo_ec_multi_site/banner.png" alt="Multi-Website Catalog Control" class="w-100 d-block" style="aspect-ratio:16/7; object-fit:cover; object-position:center top; background-color:#f2f5f8;">
+                                    <div class="p-2 d-flex flex-column flex-grow-1">
+                                        <div class="py-1 d-flex align-items-center gap-1" style="color:var(--gray-dark);font-size:13px;font-weight:700;">View on Odoo Apps <img src="icon/ic-arrow-square-out-r.svg" width="14" height="14" class="ms-1"></div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <a target="_blank" href="https://apps.odoo.com/apps/themes/19.0/theme_sitewave/" class="text-decoration-none d-block h-100">
+                                <div class="h-100 rounded-1 border bg-white overflow-hidden d-flex flex-column" style="border-color: #d4d8e4 !important;">
+                                    <img src="//apps.odoocdn.com/apps/assets/19.0/theme_sitewave/banner.png" alt="Website Theme Sitewave" class="w-100 d-block" style="aspect-ratio:16/7; object-fit:cover; object-position:center top; background-color:#f2f5f8;">
+                                    <div class="p-2 d-flex flex-column flex-grow-1">
+                                        <div class="py-1 d-flex align-items-center gap-1" style="color:var(--gray-dark);font-size:13px;font-weight:700;">View on Odoo Apps <img src="icon/ic-arrow-square-out-r.svg" width="14" height="14" class="ms-1"></div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <a target="_blank" href="https://apps.odoo.com/apps/modules/19.0/udoo_web_filter_bar/" class="text-decoration-none d-block h-100">
+                                <div class="h-100 rounded-1 border bg-white overflow-hidden d-flex flex-column" style="border-color: #d4d8e4 !important;">
+                                    <img src="//apps.odoocdn.com/apps/assets/19.0/udoo_web_filter_bar/banner.png" alt="Adaptive List Filter" class="w-100 d-block" style="aspect-ratio:16/7; object-fit:cover; object-position:center top; background-color:#f2f5f8;">
+                                    <div class="p-2 d-flex flex-column flex-grow-1">
+                                        <div class="py-1 d-flex align-items-center gap-1" style="color:var(--gray-dark);font-size:13px;font-weight:700;">View on Odoo Apps <img src="icon/ic-arrow-square-out-r.svg" width="14" height="14" class="ms-1"></div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <a target="_blank" href="https://apps.odoo.com/apps/modules/19.0/svn_product_selector/" class="text-decoration-none d-block h-100">
+                                <div class="h-100 rounded-1 border bg-white overflow-hidden d-flex flex-column" style="border-color: #d4d8e4 !important;">
+                                    <img src="//apps.odoocdn.com/apps/assets/19.0/svn_product_selector/banner.png" alt="Adaptive Product Selector" class="w-100 d-block" style="aspect-ratio:16/7; object-fit:cover; object-position:center top; background-color:#f2f5f8;">
+                                    <div class="p-2 d-flex flex-column flex-grow-1">
+                                        <div class="py-1 d-flex align-items-center gap-1" style="color:var(--gray-dark);font-size:13px;font-weight:700;">View on Odoo Apps <img src="icon/ic-arrow-square-out-r.svg" width="14" height="14" class="ms-1"></div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <a target="_blank" href="https://apps.odoo.com/apps/modules/19.0/svn_orbitpdf/" class="text-decoration-none d-block h-100">
+                                <div class="h-100 rounded-1 border bg-white overflow-hidden d-flex flex-column" style="border-color: #d4d8e4 !important;">
+                                    <img src="//apps.odoocdn.com/apps/assets/19.0/svn_orbitpdf/banner.png" alt="OrbitPDF Document Printing" class="w-100 d-block" style="aspect-ratio:16/7; object-fit:cover; object-position:center top; background-color:#f2f5f8;">
+                                    <div class="p-2 d-flex flex-column flex-grow-1">
+                                        <div class="py-1 d-flex align-items-center gap-1" style="color:var(--gray-dark);font-size:13px;font-weight:700;">View on Odoo Apps <img src="icon/ic-arrow-square-out-r.svg" width="14" height="14" class="ms-1"></div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <a target="_blank" href="https://apps.odoo.com/apps/modules/19.0/svn_activity_hub/" class="text-decoration-none d-block h-100">
+                                <div class="h-100 rounded-1 border bg-white overflow-hidden d-flex flex-column" style="border-color: #d4d8e4 !important;">
+                                    <img src="//apps.odoocdn.com/apps/assets/19.0/svn_activity_hub/banner.png" alt="Activity Management 360" class="w-100 d-block" style="aspect-ratio:16/7; object-fit:cover; object-position:center top; background-color:#f2f5f8;">
+                                    <div class="p-2 d-flex flex-column flex-grow-1">
+                                        <div class="py-1 d-flex align-items-center gap-1" style="color:var(--gray-dark);font-size:13px;font-weight:700;">View on Odoo Apps <img src="icon/ic-arrow-square-out-r.svg" width="14" height="14" class="ms-1"></div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <a target="_blank" href="https://apps.odoo.com/apps/modules/19.0/udoo_web_split_view/" class="text-decoration-none d-block h-100">
+                                <div class="h-100 rounded-1 border bg-white overflow-hidden d-flex flex-column" style="border-color: #d4d8e4 !important;">
+                                    <img src="//apps.odoocdn.com/apps/assets/19.0/udoo_web_split_view/banner.png" alt="Adaptive Split View" class="w-100 d-block" style="aspect-ratio:16/7; object-fit:cover; object-position:center top; background-color:#f2f5f8;">
+                                    <div class="p-2 d-flex flex-column flex-grow-1">
+                                        <div class="py-1 d-flex align-items-center gap-1" style="color:var(--gray-dark);font-size:13px;font-weight:700;">View on Odoo Apps <img src="icon/ic-arrow-square-out-r.svg" width="14" height="14" class="ms-1"></div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <a target="_blank" href="https://apps.odoo.com/apps/modules/19.0/svn_product_hub/" class="text-decoration-none d-block h-100">
+                                <div class="h-100 rounded-1 border bg-white overflow-hidden d-flex flex-column" style="border-color: #d4d8e4 !important;">
+                                    <img src="//apps.odoocdn.com/apps/assets/19.0/svn_product_hub/banner.png" alt="Adaptive Product Hub" class="w-100 d-block" style="aspect-ratio:16/7; object-fit:cover; object-position:center top; background-color:#f2f5f8;">
+                                    <div class="p-2 d-flex flex-column flex-grow-1">
+                                        <div class="py-1 d-flex align-items-center gap-1" style="color:var(--gray-dark);font-size:13px;font-weight:700;">View on Odoo Apps <img src="icon/ic-arrow-square-out-r.svg" width="14" height="14" class="ms-1"></div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <a target="_blank" href="https://apps.odoo.com/apps/modules/browse?author=Sveltware" class="text-decoration-none d-block h-100">
+                                <div class="h-100 rounded-1 border p-4 d-flex flex-column justify-content-center" style="background-color:#f2f5f8; border-color: #d4d8e4 !important;">
+                                    <div class="fw-bold mb-2" style="color:#1b2436; font-size:17px;">See the whole suite</div>
+                                    <div style="color:#364050;font-size:15px;line-height:1.6;">Browse every Sveltware module and theme on the Odoo Apps store, always up to date.</div>
+                                    <div class="mt-3 d-flex align-items-center gap-1" style="color:#d23f57;font-size:13px;font-weight:700;">Browse all apps <img src="icon/ic-arrow-square-out-r.svg" width="14" height="14" class="ms-1"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

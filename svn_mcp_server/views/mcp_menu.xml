@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+        id="mcp_menu_root"
+        name="MCP Server"
+        parent="base.menu_administration"
+        sequence="105"
+        groups="svn_mcp_server.group_mcp_admin"/>
+
+    <menuitem
+        id="mcp_menu_models"
+        name="MCP Available Models"
+        parent="mcp_menu_root"
+        action="mcp_model_access_action"
+        sequence="10"
+        groups="svn_mcp_server.group_mcp_admin"/>
+
+    <menuitem
+        id="mcp_menu_logs"
+        name="MCP Logs"
+        parent="mcp_menu_root"
+        action="mcp_log_action"
+        sequence="20"
+        groups="svn_mcp_server.group_mcp_admin"/>
+</odoo>
