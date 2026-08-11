@@ -55,6 +55,12 @@
                                     <field name="velocity_min_data_points"/>
                                     <field name="velocity_min_time_span"/>
                                 </group>
+                                <group string="Entry Order Execution">
+                                    <field name="entry_order_mode"/>
+                                    <field name="entry_reprice_stale_seconds"/>
+                                    <field name="entry_reprice_max_attempts"/>
+                                    <field name="entry_order_timeout_seconds"/>
+                                </group>
                                 <group string="Timing">
                                     <field name="position_size_usd" string="Position Size (USD)"/>
                                     <field name="position_size_shares" string="Position Size (Shares)"/>

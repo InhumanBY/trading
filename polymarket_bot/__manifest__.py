@@ -24,6 +24,7 @@
         "views/polymarket_bot_daily_summary_views.xml",
         "views/polymarket_bot_dashboard_views.xml",
         "views/menu_views.xml",
+        "views/polymarket_bot_order_book_views.xml",
     ],
     "assets": {
         "web.assets_backend": [

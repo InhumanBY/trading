@@ -15,7 +15,7 @@
                 <field name="avg_pair_cost"/>
                 <field name="win_rate"/>
                 <field name="net_pnl" decoration-success="net_pnl > 0"
-                       decoration-danger="net_pnl &lt; 0"/>
+                       decoration-danger="net_pnl &lt; 0" sum="Total"/>
             </list>
         </field>
     </record>

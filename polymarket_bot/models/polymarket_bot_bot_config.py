@@ -139,6 +139,34 @@ class BotConfig(models.Model):
              "Пока охват меньше — вход блокируется.",
     )
 
+    # Entry order execution
+    entry_order_mode = fields.Selection(
+        selection=[("reprice", "Reprice"), ("layer", "Layer")],
+        default="reprice",
+        string="Entry Order Mode",
+        help="reprice: отменить невыполненный остаток и выставить заново по той же цене. "
+             "layer: оставить старый ордер висеть, добавить новый ордер на остаток.",
+    )
+    entry_reprice_stale_seconds = fields.Float(
+        default=3.0,
+        string="Reprice Stale (sec)",
+        digits=(10, 1),
+        help="Если ордер не исполнился за это время — считать его устаревшим "
+             "и переставить (или добавить слой в режиме layer).",
+    )
+    entry_reprice_max_attempts = fields.Integer(
+        default=5,
+        string="Reprice Max Attempts",
+        help="Сколько раз можно переставить (reprice) или добавить слой (layer) "
+             "до остановки.",
+    )
+    entry_order_timeout_seconds = fields.Float(
+        default=30.0,
+        string="Entry Order Timeout (sec)",
+        digits=(10, 1),
+        help="Общий таймаут в секундах на весь процесс входа в позицию.",
+    )
+
     # Risk limits
     max_position_per_market_usd = fields.Float(
         default=200.0,
@@ -272,6 +300,10 @@ class BotConfig(models.Model):
             "recent_range_window_seconds": self.recent_range_window_seconds,
             "velocity_min_data_points": self.velocity_min_data_points,
             "velocity_min_time_span": self.velocity_min_time_span,
+            "entry_order_mode": self.entry_order_mode,
+            "entry_reprice_stale_seconds": self.entry_reprice_stale_seconds,
+            "entry_reprice_max_attempts": self.entry_reprice_max_attempts,
+            "entry_order_timeout_seconds": self.entry_order_timeout_seconds,
             "max_position_per_market_usd": self.max_position_per_market_usd,
             "max_total_exposure_usd": self.max_total_exposure_usd,
             "daily_loss_limit_usd": self.daily_loss_limit_usd,

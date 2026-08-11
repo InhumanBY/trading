@@ -6,3 +6,4 @@ from . import polymarket_bot_position
 from . import polymarket_bot_arb_signal
 from . import polymarket_bot_trade
 from . import polymarket_bot_daily_summary
+from . import polymarket_bot_order_book

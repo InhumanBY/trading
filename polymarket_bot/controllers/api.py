@@ -281,6 +281,48 @@ class PolymarketApi(http.Controller):
 
         return self._json_response({"id": record.id})
 
+    @http.route("/polymarket/api/order_book", type="http", auth="public", methods=["POST"], csrf=False)
+    def create_order_book_snapshot(self, **kwargs):
+        config, _ = self._get_config()
+        if not config:
+            return self._error("unauthorized", 401)
+        try:
+            body = json.loads(request.httprequest.get_data(as_text=True))
+        except Exception:
+            return self._error("invalid json")
+
+        condition_id = body.get("market_id", "").strip()
+        if not condition_id:
+            return self._error("market_id required")
+
+        levels = body.get("levels", [])
+        if not levels:
+            return self._json_response({"ok": True, "count": 0})
+
+        market = self._get_or_create_market(condition_id)
+        token_side = body.get("token_side", "yes")
+        source = body.get("source", "rest")
+
+        vals_list = []
+        for lv in levels:
+            vals_list.append({
+                "market_id": market.id,
+                "token_side": token_side,
+                "book_side": lv.get("book_side", "ask"),
+                "level": int(lv.get("level", 0)),
+                "price": float(lv.get("price", 0)),
+                "size": float(lv.get("size", 0)),
+                "source": source,
+            })
+
+        try:
+            records = request.env["polymarket_bot.order_book_snapshot"].sudo().create(vals_list)
+        except Exception as e:
+            _logger.exception("order_book create error")
+            return self._error(str(e))
+
+        return self._json_response({"ok": True, "count": len(records)})
+
     @http.route("/polymarket/api/positions/open", type="http", auth="public", methods=["POST"], csrf=False)
     def get_open_positions(self, **kwargs):
         config, _ = self._get_config()
