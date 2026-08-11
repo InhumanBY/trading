@@ -102,6 +102,11 @@ class Market(models.Model):
     price_count = fields.Integer(
         compute="_compute_counts",
     )
+    book_ids = fields.One2many(
+        comodel_name="polymarket_bot.order_book_snapshot",
+        inverse_name="market_id",
+        string="Order Book Snapshot",
+    )
 
     @api.depends("market_slug", "question", "condition_id")
     def _compute_name(self):

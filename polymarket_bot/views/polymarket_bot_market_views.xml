@@ -83,6 +83,20 @@
                                 </list>
                             </field>
                         </page>
+                        <page string="Order Book" name="order_books">
+                            <field name="book_ids" nolabel="1" readonly="1">
+                                <list>
+                                    <field name="snapshot_time"/>
+                                    <field name="market_id" column_invisible="1"/>
+                                    <field name="token_side"/>
+                                    <field name="book_side"/>
+                                    <field name="level"/>
+                                    <field name="price"/>
+                                    <field name="size"/>
+                                    <field name="source"/>
+                                </list>
+                            </field>
+                        </page>
                         <page string="Positions" name="positions">
                             <field name="position_ids" nolabel="1" readonly="1">
                                 <list decoration-warning="state in ('one_side_yes','one_side_no')"
